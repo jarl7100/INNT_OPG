@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import { Avatar, Button} from 'react-native-paper';
-import { Card, Icon } from 'react-native-elements'
+import { Card, Icon, Button } from 'react-native-elements'
 
 export class Profile extends Component {
   render() {
@@ -13,15 +12,31 @@ export class Profile extends Component {
         <Text style={{fontSize: 30, fontWeight: 'bold', top: -100}}>Ben Thompson</Text>
         <Text style={{fontSize: 20, top: -100}}>Boat Renter</Text>
         </View>
-
+        <View style={styles.container}>
         <Card>
         <Card.Title h5>Profile details</Card.Title>
         <Card.Divider />
-        <Text style={{fontSize: 15, top: 10}}></Text>
-        <Text style={{fontSize: 20, fontWeight: 'bold', top: 20}}>
-
+        <Text style={{marginBottom: 10}}>
+        Name: Ben Thompson
         </Text>
+        <Text style={{marginBottom: 10}}>
+        Email: benthompson@fakeemail.com
+        </Text>
+        <Text style={{marginBottom: 10}}>
+        Phone: 12345678
+        </Text>
+        <Text style={{marginBottom: 10}}>
+        City of residence: Copenhagen
+        </Text>
+        <Text style={{marginBottom: 10}}>
+        Address: 123 Fake Street
+        </Text>
+        <Text style={{marginBottom: 10}}>
+          Number of boats rented: 4
+        </Text>
+        <Button title='Edit Profile' />
         </Card>
+        </View>
       </SafeAreaView >
     )
   }
