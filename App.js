@@ -6,6 +6,7 @@ import BoatsScreen from "./Components/BoatsScreen";
 import Profile from "./Components/Profile";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+// Her laver vi en bottom tab navigator som viser de forskellige sider i appen
 const Tab = createBottomTabNavigator();
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         },
           null
           ],
+          // Her laver vi ikonerne til de forskellige sider i appen
           tabBarIcon: ({ color, size }) => {
            if (route.name === 'Boats') {
               return (
@@ -50,6 +52,7 @@ function App() {
             }
           },
         })}
+        // Her laver vi de forskellige sider i appen
         >
           <Tab.Screen name="Home" children={()=><HomeScreen/>} />
           <Tab.Screen name="Boats" children={()=><BoatsScreen/>} />

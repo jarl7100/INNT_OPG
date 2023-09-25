@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, FlatList, Alert, SafeAreaView } from "react-native";
-import { Avatar, Button, Card } from 'react-native-paper';
+import { StyleSheet, Text, FlatList, Alert, SafeAreaView } from "react-native";
+import { Button, Card } from 'react-native-paper';
 import * as React from "react";
-import app from "../FirebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../FirebaseConfig';
 import { useState, useEffect } from 'react';
 
-
+// Her importerer vi alle bådene fra firestore databasen
 function BoatsScreen() {
     const fetchBoats = async () => {
 
@@ -25,6 +24,7 @@ function BoatsScreen() {
 
     let BoatCards = ({ item }) => {
         return (
+            // Her Laver vi et kort til hver båd i databasen fra firestore
             <Card style={{padding: 5, margin:5}}>
                 <Card.Title title={item.title} />
                 <Card.Cover style={{paddingBottom: 5}} source={{ uri: item.imageUrl }} />
@@ -40,6 +40,7 @@ function BoatsScreen() {
     };
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
+            {/* Her laver vi en flatlist som viser alle bådene i databasen */}
             <FlatList
             style={styles.card}
                 data={boats}
@@ -52,6 +53,7 @@ function BoatsScreen() {
 
 export default BoatsScreen
 
+// Styling
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
@@ -62,9 +64,5 @@ const styles = StyleSheet.create({
         padding: 5,
         width: '95%',
         margin: 10,
-    },
-    text: {
-        justifyContent: 'center',
-        fontSize: 20,
-    },
+    }
 });
