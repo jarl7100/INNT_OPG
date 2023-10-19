@@ -1,9 +1,12 @@
+import * as React from "react";
 import { StyleSheet, Text, FlatList, Alert, SafeAreaView } from "react-native";
 import { Button, Card } from 'react-native-paper';
-import * as React from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../FirebaseConfig';
 import { useState, useEffect } from 'react';
+
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfig';
+
+import styles from '../GlobalStyleSheet/Style.js'
 
 // Her importerer vi alle bådene fra firestore databasen
 function BoatsScreen() {
@@ -52,17 +55,3 @@ function BoatsScreen() {
 }
 
 export default BoatsScreen
-
-// Styling
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    card:
-    {
-        padding: 5,
-        width: '95%',
-        margin: 10,
-    }
-});
