@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     Text: {
-        top: 60,
+        top: 40,
       alignItems: 'center',
       fontSize: 30,
       fontWeight: 'bold',
@@ -21,8 +21,8 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
       }, 
 
-      Button1: {
-        bottom: -150,
+      Button: {
+        bottom: -120,
         alignItems: 'center',
         fontSize: 35,
         fontWeight: 'bold',

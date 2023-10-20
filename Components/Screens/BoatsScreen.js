@@ -2,11 +2,12 @@ import * as React from "react";
 import { StyleSheet, Text, FlatList, Alert, SafeAreaView } from "react-native";
 import { Button, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfig';
 
-import styles from '../GlobalStyleSheet/Style.js'
+import styles from '../GlobalStyleScheet/Style.js'
 
 // Her importerer vi alle bådene fra firestore databasen
 function BoatsScreen() {
@@ -24,6 +25,8 @@ function BoatsScreen() {
     useEffect(() => {
         fetchBoats();
     }, [])
+    
+    const navigation = useNavigation();
 
     let BoatCards = ({ item }) => {
         return (
@@ -44,6 +47,11 @@ function BoatsScreen() {
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
             {/* Her laver vi en flatlist som viser alle bådene i databasen */}
+        <Button style={{marginTop: 20, marginLeft: 50, marginRight: 50, backgroundColor: 'blue'}}  mode="contained"
+        onPress={() => navigation.navigate("Map") }>
+            Map View 
+        </Button>
+
             <FlatList
             style={styles.card}
                 data={boats}

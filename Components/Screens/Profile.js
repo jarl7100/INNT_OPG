@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Image, ImageBackground, Text, View, SafeAreaView } from 'react-native'
 import { Card, Button } from 'react-native-elements'
 
-import styles from '../GlobalStyleSheet/Style.js'
+import styles from '../GlobalStyleScheet/Style.js'
 
 // Her laver vi en profil side som viser brugerens profil billede, navn, email, telefon nummer, by, adresse og antal både lejet
 export class Profile extends Component {

@@ -1,9 +1,12 @@
-import Navigation from "./Components/Navigation/Navigation";
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import TabNavigator from './Components/Navigation/BottomTabNavigator.js';
 
-function App() {
+
+export default function App() {
   return (
-    <Navigation/>
+    <NavigationContainer>
+      <TabNavigator />
+    </NavigationContainer>
   );
 }
-
-export default App
