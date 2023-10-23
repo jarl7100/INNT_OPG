@@ -2,19 +2,39 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     Text: {
-        top: 40,
+        top: 20,
       alignItems: 'center',
       fontSize: 30,
       fontWeight: 'bold',
       },
-
       Text2: {
-        top: 60,
+        top: 30,
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: 20,
       },
-
+      textAddBoat:{
+      margin: 20, 
+      fontSize: 19, 
+      fontWeight: 'bold'
+      },
+      textInput: {
+        height: 40,
+        borderColor: 'gray', 
+        borderWidth: 1, 
+        marginBottom: 10, 
+        width: '100%', 
+        paddingHorizontal: 10
+      },
+      fabButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 100,
+        width: 200,
+        backgroundColor: 'white',
+        borderColor: 'blue',
+        borderWidth: 3,
+      },
       Viewer: {
         alignItems: 'center',
         flex: 1,
@@ -22,7 +42,7 @@ export default StyleSheet.create({
       }, 
 
       Button: {
-        bottom: -120,
+        bottom: -80,
         alignItems: 'center',
         fontSize: 35,
         fontWeight: 'bold',
@@ -31,7 +51,7 @@ export default StyleSheet.create({
       },
 
       Button2: {
-        bottom: -150,
+        bottom: -100,
         alignItems: 'center',
         fontSize: 35,
         fontWeight: 'bold',

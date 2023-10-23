@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Text, FlatList, Alert, SafeAreaView } from "react-native";
+import { Text, FlatList, Alert, SafeAreaView, View } from "react-native";
 import { Button, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfig';
 
-import styles from '../GlobalStyleScheet/Style.js'
+import Style from '../GlobalStyleScheet/Style.js';
 
 // Her importerer vi alle bådene fra firestore databasen
 function BoatsScreen() {
@@ -32,12 +32,13 @@ function BoatsScreen() {
         return (
             // Her Laver vi et kort til hver båd i databasen fra firestore
             <Card style={{padding: 5, margin:5}}>
-                <Card.Title title={item.title} />
-                <Card.Cover style={{paddingBottom: 5}} source={{ uri: item.imageUrl }} />
+                <Card.Title title={item.boatTitle} />
+                <Card.Cover style={{paddingBottom: 5}} source={{ uri: item.boatImage }} />
                 <Card.Content>
-                    <Text style={{ fontSize: 15, paddingBottom: 5 }}>Price: {item.price} kr./Day</Text>
+                    <Text style={{ fontSize: 15, paddingBottom: 5 }}>Price: {item.boatPrice} kr./Day</Text>
                     <Button mode="contained" buttonColor="#4f4bfa" onPress={() => 
-                        Alert.alert(' Name of boat: ' + item.title + '\n' + "Price: " + item.price + " kr. per day " + '\n' + " Brand: " + item.brand + '\n' + " Top Speed: " + item.topSpeed + "km/h" + '\n' + "Model Year: " + item.year )}> 
+                        Alert.alert(
+                    'Name of boat:' + item.boatTitle + '\n' + "Price: " + item.boatPrice + " kr. per day " + '\n' + " Brand: " + item.boatBrand + '\n' + " Top Speed: " + item.boatTopSpeed + "km/h" + '\n' + "Model Year: " + item.boatYear )}> 
                         Learn more 
                         </Button>
                 </Card.Content>
@@ -45,20 +46,17 @@ function BoatsScreen() {
         )
     };
     return (
-        <SafeAreaView contentContainerStyle={styles.container}>
+        <View>
+        <SafeAreaView contentContainerStyle={Style.container}>
             {/* Her laver vi en flatlist som viser alle bådene i databasen */}
-        <Button style={{marginTop: 20, marginLeft: 50, marginRight: 50, backgroundColor: 'blue'}}  mode="contained"
-        onPress={() => navigation.navigate("Map") }>
-            Map View 
-        </Button>
-
             <FlatList
-            style={styles.card}
+            style={Style.card}
                 data={boats}
                 renderItem={BoatCards}
                 keyExtractor={(item) => item.id}
             />
         </SafeAreaView>
+        </View>
     );
 }
 

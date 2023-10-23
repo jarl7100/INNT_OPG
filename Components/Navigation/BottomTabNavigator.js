@@ -8,6 +8,7 @@ import AddBoat from "../Screens/AddBoat.js";
 import Profile from "../Screens/Profile.js";
 import StackNavigator from './StackNavigator.js';
 import HomeScreen from '../Screens/HomeScreen.js';
+import Map from '../Screens/Map.js';
 
 
 const Tab = createBottomTabNavigator();
@@ -51,6 +52,16 @@ function TabNavigator() {
               />
             );
           }
+            else if (route.name === 'Map') {
+                return (
+                <Ionicons
+                    name="map-outline"
+                    size={size}
+                    color={color}
+                />
+                );
+            }
+          
           else if (route.name === 'Profile') {
             return (
               <Ionicons
@@ -64,9 +75,10 @@ function TabNavigator() {
       })}
       // Her laver vi de forskellige sider i appen
       >
-        <Tab.Screen name="Home"  component={HomeScreen} />
-        <Tab.Screen name="Boats" component={StackNavigator} options={{headerShown: false}} />
+        <Tab.Screen name="Home"  component={HomeScreen}/>
+        <Tab.Screen name="Boats" component={BoatsScreen}/>
         <Tab.Screen name="Add Boat" component={AddBoat} />
+        <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     )
