@@ -1,19 +1,20 @@
 import 'react-native-gesture-handler';
 
+// Henter createStackNavigator fra react-navigation/stack
 import { createStackNavigator } from '@react-navigation/stack';
 
+// Henter alle siderne der skal bruges i stacken 
 import HomeScreen from '../Screens/HomeScreen.js';
 import Map from "../Screens/Map.js";
-import BoatsScreen from '../Screens/BoatsScreen.js';
 
 const Stack = createStackNavigator();
 
 function StackNavigator() {
     return (
+        // Her laver vi en stack navigator som bruges til at navigere mellem siderne i appen
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Map" component={Map} />
-        <BoatsScreen name="Boat" component={BoatsScreen} />
       </Stack.Navigator>
     )
   }

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Button, FAB } from 'react-native-paper';
-import Style from '../GlobalStyleScheet/Style.js';
+
 import { db } from '../../FirebaseConfig';
 import { collection, addDoc} from 'firebase/firestore';
+
+import Style from '../GlobalStyleSheet/Style.js';
 
 const AddBoat = ({ navigation }) => {
   const [boat, setBoat] = useState({
@@ -15,6 +17,9 @@ const AddBoat = ({ navigation }) => {
     boatImage: ''
   });
 
+  /**
+   * A function that adds a new boat to the database if all required fields are filled out.
+   */
   const addBoatFunction = () => {
     if (Object.values(boat).every(value => value.length > 0)) {
       addDoc(collection(db, "boats"), boat)
@@ -34,7 +39,7 @@ const AddBoat = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+    <View style={Style.addBoatViewer1}>
       <Text style={Style.textAddBoat}>Add pictures of the Boat from your gallary </Text>
       <FAB
         style={Style.fabButton}
@@ -49,7 +54,7 @@ const AddBoat = ({ navigation }) => {
         onChangeText={value => setBoat({...boat, boatImage: value})}
         placeholder="Boat Image URL"
       />
-      <View style={{ width: '100%', paddingHorizontal: 20, alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+      <View style={Style.addBoatViewer2}>
         <TextInput
           style={Style.textInput}
           value={boat.boatTitle}
@@ -80,9 +85,9 @@ const AddBoat = ({ navigation }) => {
           onChangeText={newValue => setBoat({...boat, boatYear: newValue})}
           placeholder="Boat Year"
         />
-        <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 20 }}>
+        <View style={Style.addBoatViewerButton}>
           <Button 
-            style={{ width: '80%' }} 
+            style={Style.addBoatButton} 
             mode="elevated"
             onPress={() => {
               addBoatFunction();
