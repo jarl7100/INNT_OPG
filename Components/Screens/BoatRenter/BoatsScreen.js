@@ -4,9 +4,9 @@ import { Button, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 
 import { collection, getDocs } from "firebase/firestore";
-import { db } from '../../FirebaseConfig';
+import { db } from '../../../FirebaseConfig';
 
-import Style from '../GlobalStyleSheet/Style.js';
+import Style from '../../GlobalStyleSheet/Style.js';
 
 // Her importerer vi alle bådene fra firestore databasen
 function BoatsScreen() {

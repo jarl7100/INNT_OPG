@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
-import Style from '../GlobalStyleSheet/Style.js';
+import Style from '../../GlobalStyleSheet/Style.js';
 
 
 // Laver en map med nogle markører af både omkring Danmark

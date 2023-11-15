@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { Image, ImageBackground, Text, View, SafeAreaView } from 'react-native'
 import { Card, Button } from 'react-native-elements'
 
-import Style from '../GlobalStyleSheet/Style.js'
+import Style from '../../GlobalStyleSheet/Style.js'
 
 
 export class Profile extends Component {

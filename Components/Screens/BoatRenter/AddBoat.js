@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Button, FAB } from 'react-native-paper';
 
-import { db } from '../../FirebaseConfig';
+import { db } from '../../../FirebaseConfig';
 import { collection, addDoc} from 'firebase/firestore';
 
-import Style from '../GlobalStyleSheet/Style.js';
+import Style from '../../GlobalStyleSheet/Style.js';
 
 const AddBoat = ({ navigation }) => {
   const [boat, setBoat] = useState({
