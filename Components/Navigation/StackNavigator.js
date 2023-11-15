@@ -4,8 +4,8 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Henter alle siderne der skal bruges i stacken 
-import HomeScreen from '../Screens/HomeScreen.js';
-import Map from "../Screens/Map.js";
+import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
+import Map from "../Screens/BoatRenter/Map.js";
 
 const Stack = createStackNavigator();
 

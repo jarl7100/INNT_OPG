@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert, Image } from 'react-native'
+import { Text, View, Alert, Image } from 'react-native'
 import { Button } from 'react-native-paper';
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
