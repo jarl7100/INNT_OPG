@@ -3,7 +3,7 @@ import { Button } from 'react-native-paper';
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
-import Style from '../GlobalStyleSheet/Style.js'
+import Style from '../../GlobalStyleSheet/Style.js'
 
 // Her laver vi en home screen som viser en velkomst besked og en booking knap som i denne demo version viser en alert besked i stedet for at booke en båd
 function HomeScreen() {
