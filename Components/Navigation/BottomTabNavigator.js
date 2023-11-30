@@ -76,8 +76,6 @@ function TabNavigator() {
       })}
       // Her laver vi de forskellige sider i appen
       >
-        <Tab.Screen name="CreateUser" component={CreateUser}/>
-        <Tab.Screen name="login"  component={Login}/>
         <Tab.Screen name="Home"  component={HomeScreen}/>
         <Tab.Screen name="Boats" component={BoatsScreen}/>
         <Tab.Screen name="Add Boat" component={AddBoat} />

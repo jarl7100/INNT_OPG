@@ -3,7 +3,8 @@ import { storeToken} from "../../utils/AuthService.js";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase';
-
+import { useNavigation } from '@react-navigation/native';
+import Style from '../../GlobalStyleSheet/Style.js';
 
 
 //Denne skærm er til at brugeren kan logge ind hvis han allerede har en konto
@@ -14,6 +15,7 @@ export default function Login({}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loadingState, setLoadingState] = useState(false);
+  const navigation = useNavigation();
 
 
   async function loginUser() {
@@ -31,6 +33,7 @@ export default function Login({}) {
         storeToken({userToken: pb.authStore.token, userID: pb.authStore.model.id, boatOwner: pb.authStore.model.boatOwner.toString()});
         console.log(authData);
         setLoadingState(false);
+        navigation.navigate('Startscreen');
       }
     } catch (error) {
       //kan i fremtiden laves så brugeren får besked om at der er sket en fejl
@@ -40,22 +43,24 @@ export default function Login({}) {
   }
 
   return (
-    <View >
-      <Text >Log Ind</Text>
-      <TextInput
+    <View         
+    style={Style.container}>
+      <TextInput 
+        style={Style.input}
         placeholder="Email"
         onChangeText={setEmail}
         value={email}
        
       />
       <TextInput
+        style={Style.input}
         placeholder="Adgangskode"
         onChangeText={setPassword}
         value={password}
       
         secureTextEntry={true}
       />
-      <Button title="Log ind" onPress={loginUser} />
+      <Button title="Log Ind" onPress={loginUser} />
 
       {/* //Tenary operator der viser en loading bar hvis loadingstate er true */}
       {loadingState ? <ActivityIndicator size="large" color="#0000ff" /> : null}
