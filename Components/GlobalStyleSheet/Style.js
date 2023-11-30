@@ -190,4 +190,12 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     marginTop: 10,
   },
+  logoutbutton1: {
+    marginTop: 10,
+    backgroundColor: 'blue',
+},
+logoutbutton2: {
+  marginTop: 10,
+  backgroundColor: 'red',
+}
 });
