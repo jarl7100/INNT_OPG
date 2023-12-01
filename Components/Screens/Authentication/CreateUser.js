@@ -50,11 +50,18 @@ export default function CreateUser({}) {
       if (authData) {
         //bruger Utils Authservice funktion til at gemme information om brugeren
         storeToken({userToken: pb.authStore.token, userID: pb.authStore.model.id, boatOwner: pb.authStore.model.boatOwner.toString()});
-       
-    
+        
+        console.log(pb.authStore.model.boatOwner)
         setLoadingState(false);
-        navigation.navigate('Startscreen');
+        if (pb.authStore.model.boatOwner === false) {
+          navigation.navigate('startScreenRenter');
+          console.log('navigate to renter')
+        } else {
+          navigation.navigate('startScreenOwner');
+          console.log('navigate to owner')
+        }
       }
+
     } catch (error) {
       console.error('Error:', error);
       setLoadingState(false);

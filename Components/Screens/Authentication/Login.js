@@ -31,9 +31,13 @@ export default function Login({}) {
 
       if (authData) {
         storeToken({userToken: pb.authStore.token, userID: pb.authStore.model.id, boatOwner: pb.authStore.model.boatOwner.toString()});
-        console.log(authData);
+
         setLoadingState(false);
-        navigation.navigate('Startscreen');
+        if (pb.authStore.model.boatOwner === true) {
+          navigation.navigate('startScreenOwner');
+        } else {
+          navigation.navigate('startScreenRenter');
+        }
       }
     } catch (error) {
       //kan i fremtiden laves så brugeren får besked om at der er sket en fejl
