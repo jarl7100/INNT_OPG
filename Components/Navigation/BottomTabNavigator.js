@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreateUser from '../Screens/Authentication/CreateUser.js';
 import Login from '../Screens/Authentication/Login.js';
 import BoatsScreen from "../Screens/BoatRenter/BoatsScreen.js";
-import AddBoat from "../Screens/BoatRenter/AddBoat.js";
+import AddBoat from "../Screens/BoatOwner/AddBoat.js";
 import Profile from "../Screens/BoatRenter/Profile.js";
 import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
@@ -45,15 +45,6 @@ function TabNavigator() {
               />
             );
           }
-          else if (route.name === 'Add Boat') {
-            return (
-              <Ionicons
-                name="add-circle-outline"
-                size={size}
-                color={color}
-              />
-            );
-          }
             else if (route.name === 'Map') {
                 return (
                 <Ionicons
@@ -80,7 +71,6 @@ function TabNavigator() {
 
         <Tab.Screen name="Home"  component={HomeScreen}/>
         <Tab.Screen name="Boats" component={BoatsScreen}/>
-        <Tab.Screen name="Add Boat" component={AddBoat} />
         <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
