@@ -11,6 +11,7 @@ import AddBoat from "../Screens/BoatRenter/AddBoat.js";
 import Profile from "../Screens/BoatRenter/Profile.js";
 import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
+import Communication from '../Screens/General/Communication.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -76,6 +77,7 @@ function TabNavigator() {
       })}
       // Her laver vi de forskellige sider i appen
       >
+        <Tab.Screen name="Communication" component={Communication}/>
         <Tab.Screen name="CreateUser" component={CreateUser}/>
         <Tab.Screen name="login"  component={Login}/>
         <Tab.Screen name="Home"  component={HomeScreen}/>
