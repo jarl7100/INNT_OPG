@@ -103,7 +103,9 @@ export default StyleSheet.create({
     container: {
       alignItems: 'center',
       justifyContent: 'center',
-  },
+      flex: 1,
+      backgroundColor: '#fff',
+    },
   profileContainer: {
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -174,4 +176,26 @@ export default StyleSheet.create({
   addBoatButton: {
      width: '80%' 
   },
+  input: {
+    height: 40,
+    borderColor: 'gray', 
+    borderWidth: 1, 
+    marginBottom: 10, 
+    width: '90%', 
+    paddingHorizontal: 10,
+    borderRadius: 10
+  },
+  creatuserlogin: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+  },
+  logoutbutton1: {
+    marginTop: 10,
+    backgroundColor: 'blue',
+},
+logoutbutton2: {
+  marginTop: 10,
+  backgroundColor: 'red',
+}
 });

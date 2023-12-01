@@ -2,13 +2,13 @@
 import React, { Component, useEffect, useState } from 'react'
 
 import { Image, ImageBackground, Text, View, SafeAreaView } from 'react-native'
-import { Card, Button } from 'react-native-elements'
+import { Card } from 'react-native-elements'
 import PocketBase from 'pocketbase';
 import { getID, setId } from '../../utils/AuthService.js'
 import LoadingScreen from '../LoadingScreen.js'
+import { Button } from 'react-native-paper';
 
 import Style from '../../GlobalStyleSheet/Style.js'
-
 
 export default function Profile({}) {
   const [profile, setProfile] = useState([]);
@@ -74,7 +74,12 @@ export default function Profile({}) {
               Address: {profile.address || 'Ikke angivet'}
             </Text>
     
-            <Button title='Edit Profile' />
+            <Button icon="pencil" mode="contained" style={Style.logoutbutton1}>
+              Edit profile
+           </Button>
+           <Button icon="exit-to-app" mode="contained" style={Style.logoutbutton2}>
+              Log Out
+           </Button>
           </Card>
         </View>
         </>
