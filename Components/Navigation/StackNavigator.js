@@ -8,7 +8,9 @@ import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from "../Screens/BoatRenter/Map.js";
 import CreateUser from '../Screens/Authentication/CreateUser.js';
 import Login from '../Screens/Authentication/Login.js';
-import TabNavigator from './BottomTabNavigator.js';
+import TabNavigatorBoatRenter from './TabNavigatorBoatRenter.js';
+import TabNavigatorBoatOwner from './TabNavigatorBoatOwner.js';
+import { Tab } from 'react-native-elements';
 
 const Stack = createStackNavigator();
 
@@ -25,8 +27,13 @@ function StackNavigator() {
         component={Login}
       />
       <Stack.Screen
-        name="Startscreen"
-        component={TabNavigator}
+        name="startScreenRenter"
+        component={TabNavigatorBoatRenter}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="startScreenOwner"
+        component={TabNavigatorBoatOwner}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
