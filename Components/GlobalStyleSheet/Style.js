@@ -155,6 +155,7 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   addBoatViewer1: {
+    backgroundColor: '#fff',
     flex: 1, 
     justifyContent: 'flex-start', 
     alignItems: 'center'
@@ -197,5 +198,95 @@ export default StyleSheet.create({
 logoutbutton2: {
   marginTop: 10,
   backgroundColor: 'red',
-}
+},
+profilBoatOwnerCard: {
+  backgroundColor: '#4097ed',
+  padding: 5, 
+  margin: 18, 
+  width: '95%',
+  shadowColor: '#000',
+  shadowRadius: 3,
+  shadowOpacity: 0.4,
+},
+profileOwnerContainer: {
+  flex: 1, 
+  justifyContent: 'center', 
+  backgroundColor: '#fff'
+},
+profileOwnerCardViewer: {
+  alignItems: 'center',
+  backgroundColor: '#fff',
+},
+cardImageOwner: {
+  width: 130, 
+  height: 130, 
+  borderRadius: 100,
+  alignSelf: 'flex-end',
+  marginTop: -35,
+  borderColor: 'white',
+  borderWidth: 1.5,
+},
+titleCardOwner: {
+  fontSize: 30,
+},
+textCardOwnerTop: {
+  marginTop: -125,
+  fontSize: 25,
+  fontWeight: 'bold',
+  color: 'white',
+},
+textCardOwner: {
+  marginTop: 4,
+  fontSize: 17,
+  color: 'white',
+},
+  profileEditbutton: {
+  marginTop: 10,
+  backgroundColor: 'blue',
+  borderRadius: 10,
+},
+postEditbutton: {
+  width: '100%',
+  marginTop: 10,
+  backgroundColor: 'white',
+  alignSelf: 'center',
+  borderRadius: 10,
+},
+cardImagePost: {
+  width: 120, 
+  height: 70, 
+  marginTop: 10,
+  borderRadius: 10,
+  alignSelf: 'flex-end',
+  shadowRadius: 3,
+  shadowOpacity: 0.4,
+},
+postEditButtonText: {
+  color: '#4097ed',
+  fontSize: 18,
+},
+profilBoatOwnerInsideCard : {
+  backgroundColor: '#fff'
+},
+textCardOwnerTop1: {
+  marginTop: -73,
+  fontSize: 27,
+  fontWeight: 'bold',
+},
+textCardOwner2: {
+  fontSize: 20,
+  marginTop: 5,
+},
+textCardOwner3: {
+  fontSize: 25,
+  marginBottom: 12,
+  marginTop: 10,
+  fontWeight: 'bold',
+  color: '#4097ed',
+},
+profileEditbutton2: {
+  marginTop: 7,
+  backgroundColor: 'red',
+  borderRadius: 10,
+},
 });

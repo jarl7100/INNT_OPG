@@ -54,17 +54,21 @@ export default function CreateUser({}) {
         console.log(pb.authStore.model.boatOwner)
         setLoadingState(false);
         if (pb.authStore.model.boatOwner === false) {
-          navigation.navigate('startScreenRenter');
-          console.log('navigate to renter')
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'startScreenRenter'}],
+          })
         } else {
-          navigation.navigate('startScreenOwner');
-          console.log('navigate to owner')
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'startScreenOwner'}],
+          })
         }
       }
-
     } catch (error) {
       console.error('Error:', error);
       setLoadingState(false);
+      alert('Der skete en fejl, prøv igen')
     }
   }
 

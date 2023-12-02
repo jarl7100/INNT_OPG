@@ -33,16 +33,23 @@ export default function Login({}) {
         storeToken({userToken: pb.authStore.token, userID: pb.authStore.model.id, boatOwner: pb.authStore.model.boatOwner.toString()});
 
         setLoadingState(false);
-        if (pb.authStore.model.boatOwner === true) {
-          navigation.navigate('startScreenOwner');
+        if (pb.authStore.model.boatOwner === false) {
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'startScreenRenter'}],
+          })
         } else {
-          navigation.navigate('startScreenRenter');
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'startScreenOwner'}],
+          })
         }
       }
     } catch (error) {
       //kan i fremtiden laves så brugeren får besked om at der er sket en fejl
       console.error('Error:', error);
       setLoadingState(false);
+      alert('Forkert email eller adgangskode');
     }
   }
 
