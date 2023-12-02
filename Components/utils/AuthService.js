@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 export const storeToken = async ({userToken, userID, boatOwner}) => {
   console.log(userToken, userID, boatOwner)
   try {
@@ -79,10 +80,11 @@ export const getBoatOwner = async () => {
 };
 
 export const logout = async () => {
-
+  
   try {
 
     await AsyncStorage.removeItem('userToken');
+  
     
   } catch (error) {
     // Handle errors

@@ -4,15 +4,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Henter alle siderne der skal bruges i bunden af appen
+import CreateUser from '../Screens/Authentication/CreateUser.js';
+import Login from '../Screens/Authentication/Login.js';
 import BoatsScreen from "../Screens/BoatRenter/BoatsScreen.js";
+import AddBoat from "../Screens/BoatOwner/AddBoat.js";
 import Profile from "../Screens/BoatRenter/Profile.js";
 import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
-
+import Communication from '../Screens/General/Communication.js';
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigatorBoatRenter() {
+function TabNavigator() {
     return (
       <Tab.Navigator  screenOptions={({ route }) => ({
         tabBarActiveTintColor: "blue",
@@ -72,4 +75,6 @@ export default function TabNavigatorBoatRenter() {
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     )
-}
+  }
+
+export default TabNavigator;
