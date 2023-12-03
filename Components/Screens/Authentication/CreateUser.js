@@ -1,5 +1,5 @@
 
-import { View, Text, TextInput, Button, ActivityIndicator, Switch } from 'react-native';
+import { View, Text, TextInput, Button, ActivityIndicator, Switch, Image } from 'react-native';
 import * as React from "react";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase';

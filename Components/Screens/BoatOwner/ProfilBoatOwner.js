@@ -4,6 +4,7 @@ import { Card, Button } from 'react-native-paper';
 import Style from '../../GlobalStyleSheet/Style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Divider } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 import { useEffect, useState } from 'react'
 
@@ -11,21 +12,16 @@ import PocketBase from 'pocketbase';
 import { getID, setId } from '../../utils/AuthService.js'
 
 const ProfilBoatOwner = () => {
+    const navigation = useNavigation();
     const [profile, setProfile] = useState([]);
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
 
     const getUserInformation = async () => {
-
-
         const ID = await getID()
         const record = await pb.collection('users').getOne(ID);
         setProfile(record)
         console.log(record)
-
     }
-
-
-
     useEffect(() => {
         getUserInformation();
     }, []);
@@ -65,7 +61,7 @@ const ProfilBoatOwner = () => {
             <View style={Style.profileOwnerCardViewer}>
                 <Card style={Style.profilBoatOwnerCard} >
                     <Card.Content>
-                        <Card style={Style.profilBoatOwnerInsideCard}>
+                        <Card style={Style.profilBoatOwnerInsideCard} onPress={() => navigation.navigate('Boat Post')}>
                             <Card.Title title="Your boat" titleStyle={{ textAlign: 'center', fontSize: 20, color: "#4097ed", fontWeight: 'bold', marginBottom: -5 }} />
                             <Card.Content>
                                 <Divider />
@@ -81,8 +77,8 @@ const ProfilBoatOwner = () => {
                                 </Text>
                             </Card.Content>
                         </Card>
-                        <Button style={Style.postEditbutton} mode="contained" onPress={() => console.log('Pressed')}>
-                            {<Text style={Style.postEditButtonText}>Edit Post</Text>}
+                        <Button style={Style.postEditbutton} mode="contained" onPress={() => navigation.navigate('Add Boat')}>
+                            {<Text style={Style.postEditButtonText}>New Post</Text>}
                         </Button>
                     </Card.Content>
                 </Card>

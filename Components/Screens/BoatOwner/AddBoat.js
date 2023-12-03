@@ -45,8 +45,6 @@ const AddBoat = ({ navigation }) => {
       }
         
 }
-  
-
   return (
     <View style={Style.addBoatViewer1}>
       <Text style={Style.textAddBoat}>Add pictures of the Boat from your gallary </Text>
@@ -100,10 +98,9 @@ const AddBoat = ({ navigation }) => {
             mode="elevated"
             onPress={() => {
               addBoatToPocketbase();
-             
             }}
           >
-            Post
+            {<Text style={Style.addBoatButtonText}> Add Boat </Text>}
           </Button>
         </View>
       </View>

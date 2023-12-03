@@ -4,13 +4,12 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Henter alle siderne der skal bruges i stacken 
-import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
-import Map from "../Screens/BoatRenter/Map.js";
 import CreateUser from '../Screens/Authentication/CreateUser.js';
 import Login from '../Screens/Authentication/Login.js';
 import TabNavigatorBoatRenter from './TabNavigatorBoatRenter.js';
 import TabNavigatorBoatOwner from './TabNavigatorBoatOwner.js';
 import { Tab } from 'react-native-elements';
+import BoatPost from '../Screens/BoatOwner/BoatPost.js';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +34,10 @@ function StackNavigator() {
         name="startScreenOwner"
         component={TabNavigatorBoatOwner}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Boat Post"
+        component={BoatPost}
       />
     </Stack.Navigator>
   );

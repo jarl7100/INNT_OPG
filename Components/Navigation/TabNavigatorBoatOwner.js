@@ -5,9 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Henter alle siderne der skal bruges i bunden af appen
 import AddBoat from "../Screens/BoatOwner/AddBoat.js";
-import Profile from "../Screens/BoatRenter/Profile.js";
-import HomeScreenBoatOwner from '../Screens/BoatOwner/HomeScreen.js';
-import YourReviews from '../Screens/BoatOwner/YourReviews.js';
 import YourReservation from '../Screens/BoatOwner/YourResevation.js';
 import ProfilBoatOwner from '../Screens/BoatOwner/ProfilBoatOwner.js';
 
@@ -34,7 +31,7 @@ export default function TabNavigatorBoatOwner() {
             />
             );
           }
-          else if (route.name === 'AddBoat') {
+          else if (route.name === 'Add Boat') {
             return (
               <Ionicons
                 name="add-outline"
@@ -52,7 +49,7 @@ export default function TabNavigatorBoatOwner() {
               />
             );
           }
-          else if (route.name === 'YourReservation') {
+          else if (route.name === 'Your Reservations') {
             return (
               <Ionicons
                 name="calendar-outline"
@@ -66,8 +63,8 @@ export default function TabNavigatorBoatOwner() {
       // Her laver vi de forskellige sider i appen
       >
         <Tab.Screen name="Profile"  component={ProfilBoatOwner}/>
-        <Tab.Screen name="AddBoat" component={AddBoat} />
-        <Tab.Screen name="YourReservation" component={YourReservation} />
+        <Tab.Screen name="Add Boat" component={AddBoat} />
+        <Tab.Screen name="Your Reservations" component={YourReservation} />
       </Tab.Navigator>
     )
   }

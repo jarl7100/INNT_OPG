@@ -25,7 +25,8 @@ export default StyleSheet.create({
         borderWidth: 1, 
         marginBottom: 10, 
         width: '100%', 
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        borderRadius: 10,
       },
       fabButton: {
         justifyContent: 'center',
@@ -33,7 +34,7 @@ export default StyleSheet.create({
         height: 100,
         width: 200,
         backgroundColor: 'white',
-        borderColor: 'blue',
+        borderColor: '#4097ed',
         borderWidth: 3,
       },
       homeViewer: {
@@ -175,7 +176,8 @@ export default StyleSheet.create({
     bottom: 20
   },
   addBoatButton: {
-     width: '80%' 
+     width: '80%', 
+     backgroundColor: '#4097ed'
   },
   input: {
     height: 40,
@@ -234,6 +236,7 @@ textCardOwnerTop: {
   fontSize: 25,
   fontWeight: 'bold',
   color: 'white',
+  
 },
 textCardOwner: {
   marginTop: 4,
@@ -241,10 +244,10 @@ textCardOwner: {
   color: 'white',
 },
   profileEditbutton: {
-  marginTop: 10,
-  backgroundColor: 'blue',
-  borderRadius: 10,
-},
+    marginTop: 10,
+    backgroundColor: 'blue',
+    borderRadius: 10,
+  },
 postEditbutton: {
   width: '100%',
   marginTop: 10,
@@ -288,5 +291,8 @@ profileEditbutton2: {
   marginTop: 7,
   backgroundColor: 'red',
   borderRadius: 10,
+},
+addBoatButtonText: {
+  color: 'white',
 },
 });
