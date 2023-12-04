@@ -26,8 +26,11 @@ const YourReservation = () => {
         sort: 'startDate',
         filter: filter,
     });
-    console.log(data)
+    if(data.items.length === 0) {
+      setReservations([{"id": "1", "renterName": "No reservations yet", "startDate": "", "endDate": ""}]);
+    } else {
     setReservations(data.items);
+    }
   }
 
   useEffect(() => {
