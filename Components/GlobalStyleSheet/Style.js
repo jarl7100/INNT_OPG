@@ -15,16 +15,25 @@ export default StyleSheet.create({
       fontSize: 20,
       },
       textAddBoat:{
-      margin: 20, 
-      fontSize: 19, 
+      margin: 10, 
+      fontSize: 23, 
       fontWeight: 'bold'
       },
       textInput: {
-        height: 40,
-        borderColor: 'gray', 
+        borderColor: '#4097ed', 
+        width: 100,
         borderWidth: 1, 
         marginBottom: 10, 
-        width: '100%', 
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginRight: 10
+      },
+      textInputDescription: {
+        padding: 10,
+        height: 100,
+        borderColor: '#4097ed',
+        borderWidth: 1,
+        width: '100%',
         paddingHorizontal: 10,
         borderRadius: 10,
       },
@@ -35,7 +44,7 @@ export default StyleSheet.create({
         width: 200,
         backgroundColor: 'white',
         borderColor: '#4097ed',
-        borderWidth: 3,
+        borderWidth: 2,
       },
       homeViewer: {
         alignItems: 'center',
@@ -163,10 +172,9 @@ export default StyleSheet.create({
   },
   addBoatViewer2: {
     width: '100%', 
-    paddingHorizontal: 20, 
     alignItems: 'center', 
-    flex: 1, 
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   addBoatViewerButton: {
     width: '100%', 
@@ -176,7 +184,8 @@ export default StyleSheet.create({
     bottom: 20
   },
   addBoatButton: {
-     width: '80%', 
+    borderRadius: 10,
+     width: '90%', 
      backgroundColor: '#4097ed'
   },
   input: {

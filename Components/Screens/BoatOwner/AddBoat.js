@@ -8,102 +8,155 @@ import Style from '../../GlobalStyleSheet/Style.js';
 import { getID } from '../../utils/AuthService.js';
 
 const AddBoat = ({ navigation }) => {
-  
+
   const [boat, setBoat] = useState({
-    boatTitle: 'test',
-    boatBrand: 'test',
-    boatPrice: 200,
-    boatTopSpeed: 75,
-    boatYear: 2000,
+    boatTitle: '',
+    boatBrand: '',
+    boatPrice: 0,
+    boatTopSpeed: 0,
+    boatYear: 0,
     boatImage: null,
     dateStart: new Date(),
     dateEnd: new Date(),
-    typeOfBoat: 'sailboat',
-    boatHarbour: 'gilleleje',
+    typeOfBoat: '',
+    boatHarbour: '',
     boatLength: 0,
     boatOwner: '',
-    boatDescription: 'test12321',
-    boatLength: 20,
+    boatDescription: '',
+    boatLength: 0,
   });
 
- 
- async function addBoatToPocketbase(){
-  const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
 
-  setBoat({...boat, boatOwner: await getID()})
+  async function addBoatToPocketbase() {
+    const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
+
+    setBoat({ ...boat, boatOwner: await getID() })
     console.log(boat)
-  
-  try {
-   
 
-   
-    await pb.collection('boatPosts').create(boat);
-      
-         } catch (error) {
-        console.error('Error:', error);
-      
-      }
-        
-}
+    try {
+
+
+
+      await pb.collection('boatPosts').create(boat);
+
+    } catch (error) {
+      console.error('Error:', error);
+
+    }
+
+  }
   return (
     <View style={Style.addBoatViewer1}>
-      <Text style={Style.textAddBoat}>Add pictures of the Boat from your gallary </Text>
+      <Text style={Style.textAddBoat}>Upload billeder</Text>
       <FAB
         style={Style.fabButton}
         size="large"
         icon="plus"
         onPress={() => console.log('Pressed')}
       />
-      <Text style={Style.textAddBoat}>Or add a image URL </Text>
+      <Text style={[Style.textAddBoat, {marginTop: 50}]}>Beskrivelse </Text>
       <TextInput
-        style={[Style.textInput, { width: '90%' }]}
+        style={[Style.textInputDescription, { width: '90%' }]}
         value={boat.boatImage}
-        onChangeText={value => setBoat({...boat, boatImage: value})}
-        placeholder="Boat Image URL"
+        multiline={true}
+        numberOfLines={4}
+        maxLength={250} // Set the maximum number of characters allowed
+        placeholder='Max 250 tegn'
+        onChangeText={value => {
+          if (value.length <= 250) { // Limit to 250 characters
+            setBoat({ ...boat, boatImage: value });
+          }
+        }}
       />
+      <Text style={[Style.textAddBoat, { marginTop: 20 }]}>Specifikationer</Text>
       <View style={Style.addBoatViewer2}>
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatTitle}
-          onChangeText={newValue => setBoat({...boat, boatTitle: newValue})}
-          placeholder="Boat Title"
-        />
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatBrand}
-          onChangeText={newValue => setBoat({...boat, boatBrand: newValue})}
-          placeholder="Boat Brand"
-        />
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatPrice}
-          onChangeText={newValue => setBoat({...boat, boatPrice: newValue})}
-          placeholder="Boat Price"
-        />
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatTopSpeed}
-          onChangeText={newValue => setBoat({...boat, boatTopSpeed: newValue})}
-          placeholder="Boat Top Speed"
-        />
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatYear}
-          onChangeText={newValue => setBoat({...boat, boatYear: newValue})}
-          placeholder="Boat Year"
-        />
+        <View>
+          <Text style={{ marginBottom: 12 }}>Længde: </Text>
+          <Text style={{ marginBottom: 12 }}>Rum: </Text>
+          <Text style={{ marginBottom: 12 }}>Antal bad: </Text>
+          <Text style={{ marginBottom: 12 }}>Byggeår: </Text>
+        </View>
+
+
+        <View>
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+        </View>
+
+        <View>
+          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Gummibåd: </Text>
+          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Styresystem: </Text>
+          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Tv: </Text>
+          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Model: </Text>
+        </View>
+        <View>
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+          <TextInput
+            style={Style.textInput}
+            value={boat.boatTitle}
+            onChangeText={newValue => setBoat({ ...boat, boatTitle: newValue })}
+          />
+        </View>
+
+
         <View style={Style.addBoatViewerButton}>
-          <Button 
-            style={Style.addBoatButton} 
-            mode="elevated"
-            onPress={() => {
-              addBoatToPocketbase();
-            }}
-          >
-            {<Text style={Style.addBoatButtonText}> Add Boat </Text>}
-          </Button>
         </View>
       </View>
+      <Text style={Style.textAddBoat}>Beløb</Text>
+      <TextInput
+        style={{
+          borderColor: '#4097ed',
+          height: 30,
+          width: "90%",
+          borderWidth: 1,
+          marginBottom: 10,
+          paddingHorizontal: 10,
+          borderRadius: 10,
+          marginRight: 10,
+          fontSize: 24,
+        }}
+      />
+      <Button
+        style={Style.addBoatButton}
+        mode="elevated"
+        onPress={() => {
+          addBoatToPocketbase();
+        }}
+      >
+        {<Text style={Style.addBoatButtonText}> Add Boat </Text>}
+      </Button>
     </View>
   );
 };
