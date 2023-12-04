@@ -2,6 +2,7 @@ import * as React from "react";
 import { Text, FlatList, Alert, SafeAreaView, View } from "react-native";
 import { Button, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../../FirebaseConfig';
@@ -10,6 +11,7 @@ import Style from '../../GlobalStyleSheet/Style.js';
 
 // Her importerer vi alle bådene fra firestore databasen
 function BoatsScreen() {
+    const navigation = useNavigation();
     const fetchBoats = async () => {
 
         // Her henter vi alle bådene fra firestore databasen
@@ -31,7 +33,7 @@ function BoatsScreen() {
     let BoatCards = ({ item }) => {
         return (
             // Her Laver vi et kort til hver båd i databasen fra firestore
-            <Card style={Style.boatCard}>
+            <Card style={Style.boatCard} onPress={() => navigation.navigate("Boat Post")}>
 
                 {/* Her viser vi informationen som hentes fra Firebase i et "Card" */}
                 <Card.Title title={item.boatTitle} />
