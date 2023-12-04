@@ -102,10 +102,10 @@ const AddBoat = ({ navigation }) => {
         </View>
 
         <View>
-          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Gummibåd: </Text>
-          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Styresystem: </Text>
-          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Tv: </Text>
-          <Text style={{ marginBottom: 12, marginLeft: 12 }}>Model: </Text>
+          <Text style={{ marginBottom: 12}}>Gummibåd: </Text>
+          <Text style={{ marginBottom: 12}}>Styresystem: </Text>
+          <Text style={{ marginBottom: 12}}>Tv: </Text>
+          <Text style={{ marginBottom: 12}}>Model: </Text>
         </View>
         <View>
           <TextInput

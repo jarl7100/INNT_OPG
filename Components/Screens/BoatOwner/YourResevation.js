@@ -12,15 +12,12 @@ const YourReservation = () => {
         <Text style={styles.title}>April</Text>
       <Card style={styles.Card}>
         <Card.Content>
-          <Text style={styles.text}>⛵️Reservation</Text>
+          <Text style={styles.text}>🗿Person</Text>
           <Text style={styles.text}t>🗓️Reservation</Text>
         </Card.Content>
         <Card.Actions style={styles.Actions}>
-        <Pressable style={styles.Button}>
-          <Text style={styles.text2}>See Details</Text>
-        </Pressable>
         <Pressable style={styles.Button} onPress={() => navigation.navigate("Communication")}>
-          <Text style={styles.text2}>Contact</Text>
+          <Text style={styles.text2}>Contact The Renter</Text>
         </Pressable>
         </Card.Actions>
       </Card>
@@ -59,8 +56,8 @@ const styles = StyleSheet.create({
   Button: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: '90%',
     paddingVertical: 8,
-    paddingHorizontal: 35,
     borderRadius: 12,
     elevation: 3,
     backgroundColor: '#4097ed',
