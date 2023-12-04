@@ -1,112 +1,120 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet, TextInput, Button, KeyboardAvoidingView } from 'react-native';
 import PocketBase from 'pocketbase';
-import { getID } from '../../utils/AuthService.js';
-import LoadingScreen from '../LoadingScreen.js';
+import LoadingScreen from '../LoadingScreen';
 
-const styles = StyleSheet.create({
-    container: {
+export default function Communication({ route }) {
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  const { renter, owner } = route.params;
+
+    async function sendMessage() {
+        const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
+        const data = {
+            message: message,
+            messageReceiver: renter,
+            messageSender: owner,
+        }
+        await pb.collection('messages').create(data);
+        setMessage('');
+        getMessages();
+    }
+
+    async function getMessages() {
+        const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
+        const filter = `(messageReceiver = '${renter}' || messageSender = '${renter}') && (messageReceiver = '${owner}' || messageSender = '${owner}')`;
+        const data = await pb.collection('messages').getList(1, 50, {
+            sort: '-created',
+            filter: filter,
+        });
+        
+        if (data.items.length === 0) {
+            setMessages([{"id": "1", "message": "No messages yet", "messageReceiver": renter, "messageSender": owner}]);
+        } else {
+        setMessages(data.items);
+        }
+    }
+   
+    useEffect(() => {
+        getMessages();
+    }, [])
+
+    const renderItem = ({ item }) => {
+        const messageStyle = item.messageReceiver === renter ? styles.sentMessage : styles.receivedMessage;
+        return (
+          <View style={[styles.messageContainer, messageStyle]}>
+            <Text style={styles.messageText}>{item.message}</Text>
+          </View>
+        );
+      };
+    
+      return (
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+          {messages.length === 0 ? (
+            <LoadingScreen />
+          ) : (
+            <FlatList
+              data={messages}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={renderItem}
+              contentContainerStyle={styles.messageList}
+              inverted // Scrolls messages from bottom to top
+            />
+          )}
+          <View style={styles.horizontal}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Write a message"
+              onChangeText={(text) => setMessage(text)}
+              value={message}
+            />
+            <Button title="Send" onPress={() => sendMessage()} />
+          </View>
+        </KeyboardAvoidingView>
+      );
+    }
+    
+    const styles = StyleSheet.create({
+      container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    messageContainer: {
+      },
+      messageList: {
+        flexGrow: 1,
+      },
+      messageContainer: {
+        borderRadius: 8,
         padding: 10,
         marginVertical: 5,
-        borderRadius: 10,
         maxWidth: '80%',
-    },
-    sentMessage: {
-        backgroundColor: '#e6e6e6',
-        alignSelf: 'flex-start',
-        marginLeft: 10,
-    },
-    receivedMessage: {
-        backgroundColor: '#007aff',
+      },
+      receivedMessage: {
+        backgroundColor: 'darkgray', // Background color for received messages
+        alignSelf: 'flex-start', // Align received messages to the left
+      },
+      sentMessage: {
+        backgroundColor: '#4097ed', // Background color for sent messages
         alignSelf: 'flex-end',
-        marginRight: 10,
-    },
-    messageText: {
+        color: 'white', // Align sent messages to the right
+      },
+      messageText: {
         fontSize: 16,
-        color: '#000',
-    },
-    sentMessageText: {
-        color: '#000',
-    },
-    receivedMessageText: {
-        color: '#fff',
-    },
-});
-
-export default function Communication() {
-        const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
-        const [messages, setMessages] = useState([]);
-        const [userId, setUserId] = useState('ep9rkfngvt7dchh')
-        const [id, setId] = useState('p19k344eoibhbz9')
-        const [loading, setLoading] = useState(true);
-
-        async function getMessages() {
-            const sentFilter = `messageSender = '${userId}' && messageReceiver = '${id}'`;
-         
-            const receivedFilter = `messageSender = '${id}' && messageReceiver = '${userId}'`;
-
-            try {
-                const sentMessages = await pb.collection("messages").getList(1, 10, {
-                    sort: "-created",
-                    filter: sentFilter,
-                });
-
-                const receivedMessages = await pb.collection("messages").getList(1, 10, {
-                    sort: "-created",
-                    filter: receivedFilter,
-                });
-                console.log(receivedMessages)
-                const concat = [...sentMessages.items, ...receivedMessages.items]
-                    .map((message) => ({
-                        id: message.id,
-                        text: message.message,
-                        senderId: message.messageSender,
-                        receiverId: message.messageReceiver,
-                        createdDate: message.created,
-                    }))
-                    .sort((a, b) =>  new Date(b.createdDate) - new Date(a.createdDate));
-
-                setMessages(concat);
-                console.log(messages)
-                setLoading(false);
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        }
-
-        useEffect(() => {
-            getMessages()
-                
-
-               pb.collection('messages').subscribe('*', function (e) {
-                   
-                    getMessages();
-            });
-        }, []);
-
-
-  
-
-    return (
-        <View style={styles.container}>
-                { loading ? <LoadingScreen /> :
-                        messages.map((message) => {
-                                return (
-                                        <View key={message.id} style={[styles.messageContainer, message.senderId === id ? styles.sentMessage : styles.receivedMessage]}>
-                                                <Text style={[styles.messageText, message.senderId === id ? styles.sentMessageText : styles.receivedMessageText]}>{message.text}</Text>
-                                        </View>
-                                )
-                        })
-                }
-
-        </View>
-    );
-}
-
+        color: 'white',
+      },
+      horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        borderTopWidth: 1,
+        borderTopColor: 'gray',
+      },
+      textInput: {
+        flex: 1,
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        padding: 8,
+      },
+    });

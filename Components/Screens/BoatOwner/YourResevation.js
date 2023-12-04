@@ -1,27 +1,80 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Button, Pressable, FlatList } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { getID } from '../../utils/AuthService.js';
+import PocketBase from 'pocketbase';
+import LoadingScreen from '../LoadingScreen.js';
 
 const YourReservation = () => {
+  const [reservations, setReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
+  const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
+
   const navigation = useNavigation();
+
+  function navigateToCommunication(renterID, ownerID) {
+    
+    
+
+    navigation.navigate('Communication', { renter: renterID, owner: ownerID });
+  }
+
+  async function getReservations () {
+    const id = await getID();
+    const filter = `owner = '${id}'`;
+    const data = await pb.collection('reservations').getList(1, 10, {
+        sort: 'startDate',
+        filter: filter,
+    });
+    console.log(data)
+    setReservations(data.items);
+  }
+
+  useEffect(() => {
+    getReservations();
+  }, []);
+
+
+  const renderItem = ({ item }) => {
+    const endDate = new Date(item.endDate);
+    const startDate = new Date(item.startDate);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    const endDateString = endDate.toLocaleDateString('da-DK', options);
+    const startDateString = startDate.toLocaleDateString('da-DK', options);
+  return (
+    <View>
+  
+  <Card style={styles.Card}>
+    <Card.Content>
+      <Text style={styles.text}>🗿Person: {item.renterName}</Text>
+    <Text style={styles.text}>🗓️Start: {startDateString}</Text>
+      <Text style={styles.text}>🗓️End: {endDateString}</Text> 
+    </Card.Content>
+    <Card.Actions style={styles.Actions}>
+    <Pressable style={styles.Button} onPress={() => navigateToCommunication(item.renter, item.owner)}>
+      <Text style={styles.text2}>Contact The Renter</Text>
+    </Pressable>
+    </Card.Actions>
+  </Card>
+  </View>
+)}
+
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>April</Text>
-      <Card style={styles.Card}>
-        <Card.Content>
-          <Text style={styles.text}>🗿Person</Text>
-          <Text style={styles.text}t>🗓️Reservation</Text>
-        </Card.Content>
-        <Card.Actions style={styles.Actions}>
-        <Pressable style={styles.Button} onPress={() => navigation.navigate("Communication")}>
-          <Text style={styles.text2}>Contact The Renter</Text>
-        </Pressable>
-        </Card.Actions>
-      </Card>
-      </View>
+
+        {reservations.length === 0 ? (
+                <LoadingScreen />
+            ) : (
+                <FlatList
+                    data={reservations}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderItem}
+                />
+            )}
+
+      
+
     </View>
   );
 };
@@ -36,6 +89,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: "85%",
     backgroundColor: '#fff',
+    marginBottom: 20,
+    marginTop: 10,
   },
   title: {
     fontSize: 24,
