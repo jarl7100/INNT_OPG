@@ -1,8 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 const BoatPost = () => {
+    const navigation = useNavigation();
+    const deleteBoatPost = () => {
+        console.log('delete')
+        navigation.navigate("Profile");
+    }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bavarian Yacht</Text>
@@ -24,14 +30,14 @@ const BoatPost = () => {
       <Text style={styles.title14}>Tv:</Text>
       <Text style={styles.title15}>Model:</Text>
       <View style={styles.container2}>
-    <Button style={styles.postDeletebutton} mode="contained" onPress={() => console.log('Pressed')}>
+    <Button style={styles.postDeletebutton} mode="contained" onPress={() => deleteBoatPost()}>
         Slet
     </Button>
     </View>
-    <Button style={styles.postEditbutton} mode="contained" onPress={() => console.log('Pressed')}>
+    <Button style={styles.postEditbutton} mode="contained" onPress={() => navigation.navigate("Update Boat Post")}>
         Rediger opslag
     </Button>
-    <Button style={styles.postReviewsbutton} mode="contained" onPress={() => console.log('Pressed')}>
+    <Button style={styles.postReviewsbutton} mode="contained" onPress={() => navigation.navigate("Your Reviews")}>
         Anmeldelser
     </Button>
     </View>

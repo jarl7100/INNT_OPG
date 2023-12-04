@@ -3,8 +3,10 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import LoadingScreen from '../LoadingScreen';
 import PocketBase from 'pocketbase';
 import { getID } from '../../utils/AuthService.js';
+import { useNavigation } from '@react-navigation/native';
 
 export default function YourReviews() {
+    const navigation = useNavigation();
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
     const [reviews, setReviews] = useState([]);
 

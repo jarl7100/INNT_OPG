@@ -9,12 +9,19 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react'
 
 import PocketBase from 'pocketbase';
-import { getID, setId } from '../../utils/AuthService.js'
+import { getID, setId, logout } from '../../utils/AuthService.js'
 
 const ProfilBoatOwner = () => {
     const navigation = useNavigation();
     const [profile, setProfile] = useState([]);
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
+
+    async function loguserout() {
+        await logout();
+        navigation.reset({
+            index: 0,
+            routes: [{name: 'Opret profil'}],
+          })}
 
     const getUserInformation = async () => {
         const ID = await getID()
@@ -48,10 +55,13 @@ const ProfilBoatOwner = () => {
                         <Text style={Style.textCardOwner}>
                             {<Ionicons name="mail-outline" size={20} />} {profile.email || 'Ikke angivet'}
                         </Text>
-                        <Button style={Style.profileEditbutton} mode="contained" onPress={() => console.log('Pressed')}>
+                        <Button style={Style.profileEditbutton} mode="contained" onPress={() => navigation.navigate('Update Profile')}>
                             Edit Profile
                         </Button>
-                        <Button style={Style.profileEditbutton2} mode="contained" onPress={() => console.log('Pressed')}>
+                        <Button style={Style.profileEditbutton} mode="contained" onPress={() => navigation.navigate('Insurance')}>
+                            Insurance
+                        </Button>
+                        <Button style={Style.profileEditbutton2} mode="contained" onPress={() => loguserout()}>
                             Log out
                         </Button>
                     </Card.Content>
@@ -77,8 +87,8 @@ const ProfilBoatOwner = () => {
                                 </Text>
                             </Card.Content>
                         </Card>
-                        <Button style={Style.postEditbutton} mode="contained" onPress={() => navigation.navigate('Add Boat')}>
-                            {<Text style={Style.postEditButtonText}>New Post</Text>}
+                        <Button style={Style.postEditbutton} mode="contained" onPress={() => navigation.navigate('Your Reviews')}>
+                            {<Text style={Style.postEditButtonText}>Reviews</Text>}
                         </Button>
                     </Card.Content>
                 </Card>

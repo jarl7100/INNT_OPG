@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
 import { Card } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 const YourReservation = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View>
@@ -16,7 +19,7 @@ const YourReservation = () => {
         <Pressable style={styles.Button}>
           <Text style={styles.text2}>See Details</Text>
         </Pressable>
-        <Pressable style={styles.Button}>
+        <Pressable style={styles.Button} onPress={() => navigation.navigate("Communication")}>
           <Text style={styles.text2}>Contact</Text>
         </Pressable>
         </Card.Actions>

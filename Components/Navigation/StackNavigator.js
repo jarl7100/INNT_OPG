@@ -10,6 +10,12 @@ import TabNavigatorBoatRenter from './TabNavigatorBoatRenter.js';
 import TabNavigatorBoatOwner from './TabNavigatorBoatOwner.js';
 import { Tab } from 'react-native-elements';
 import BoatPost from '../Screens/BoatOwner/BoatPost.js';
+import YourReviews from '../Screens/BoatOwner/YourReviews.js';
+import Communication from '../Screens/General/Communication.js';
+import Insurance from '../Screens/BoatOwner/Insurence.js';
+import UpdateBoatPost from '../Screens/BoatOwner/UpdateBoatPost.js';
+import UpdateProfile from '../Screens/BoatOwner/UpdateProfile.js';
+import ProfilBoatOwner from '../Screens/BoatOwner/ProfilBoatOwner.js';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +44,26 @@ function StackNavigator() {
       <Stack.Screen
         name="Boat Post"
         component={BoatPost}
+      />
+      <Stack.Screen
+        name="Your Reviews"
+        component={YourReviews}
+      />
+      <Stack.Screen
+        name="Communication"
+        component={Communication}
+      />
+      <Stack.Screen
+        name="Insurance"
+        component={Insurance}
+      />
+      <Stack.Screen
+        name="Update Boat Post"
+        component={UpdateBoatPost}
+      />
+      <Stack.Screen
+        name="Update Profile"
+        component={UpdateProfile}
       />
     </Stack.Navigator>
   );
