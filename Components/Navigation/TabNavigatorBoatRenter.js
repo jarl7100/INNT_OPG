@@ -12,6 +12,7 @@ import Profile from "../Screens/BoatRenter/Profile.js";
 import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
 import Communication from '../Screens/General/Communication.js';
+import Resevations from '../Screens/BoatRenter/Resevations.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,13 +65,24 @@ function TabNavigator() {
               />
             );
           }
+          else if (route.name === 'Resevations') {
+            return (
+              <Ionicons
+                name="calendar-outline"
+                size={size}
+                color={color}
+              />
+            );
+          }
         },
       })}
+
       // Her laver vi de forskellige sider i appen
       >
 
         <Tab.Screen name="Home"  component={HomeScreen}/>
         <Tab.Screen name="Boats" component={BoatsScreen}/>
+        <Tab.Screen name="Resevations" component={Resevations} />
         <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>

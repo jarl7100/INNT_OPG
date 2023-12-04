@@ -4,31 +4,34 @@ import React, { Component, useEffect, useState } from 'react'
 import { Image, ImageBackground, Text, View, SafeAreaView } from 'react-native'
 import { Card } from 'react-native-elements'
 import PocketBase from 'pocketbase';
-import { getID, setId } from '../../utils/AuthService.js'
+import { getID, setId, logout } from '../../utils/AuthService.js'
 import LoadingScreen from '../LoadingScreen.js'
 import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 import Style from '../../GlobalStyleSheet/Style.js'
 
 export default function Profile({}) {
+  const navigation = useNavigation();
   const [profile, setProfile] = useState([]);
   const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
 
   const getUserInformation = async () => {
-
-   
     const ID = await getID()
     const record = await pb.collection('users').getOne(ID);
     setProfile(record)
-    console.log(record)
-    
+    console.log(record)   
 }
- 
-    
-
     useEffect(() => {
       getUserInformation();
     }, []);
+
+    async function loguserout() {
+      await logout();
+      navigation.reset({
+          index: 0,
+          routes: [{name: 'Opret profil'}],
+        })}
 
     return (
       // SafeAreaView sørger for at indholdet ikke bliver skjult af statusbaren på iOS
@@ -74,10 +77,10 @@ export default function Profile({}) {
               Address: {profile.address || 'Ikke angivet'}
             </Text>
     
-            <Button icon="pencil" mode="contained" style={Style.logoutbutton1}>
+            <Button icon="pencil" mode="contained" style={Style.logoutbutton1} onPress={()=> navigation.navigate('Update Profile')}>
               Edit profile
            </Button>
-           <Button icon="exit-to-app" mode="contained" style={Style.logoutbutton2}>
+           <Button icon="exit-to-app" mode="contained" style={Style.logoutbutton2}onPress={() => loguserout()}>
               Log Out
            </Button>
           </Card>
