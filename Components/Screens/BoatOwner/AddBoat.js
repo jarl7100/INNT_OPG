@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Button, FAB } from 'react-native-paper';
 import PocketBase from 'pocketbase';
-
+import * as ImagePicker from 'expo-image-picker';
 import Style from '../../GlobalStyleSheet/Style.js';
 
 import { getID } from '../../utils/AuthService.js';
@@ -25,26 +25,37 @@ const AddBoat = ({ navigation }) => {
     boatDescription: '',
     boatLength: 0,
   });
-
+  const [image, setImage] = useState(null);
 
   async function addBoatToPocketbase() {
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
 
     setBoat({ ...boat, boatOwner: await getID() })
     console.log(boat)
-
     try {
-
-
-
       await pb.collection('boatPosts').create(boat);
 
     } catch (error) {
       console.error('Error:', error);
-
     }
-
   }
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={Style.addBoatViewer1}>
       <Text style={Style.textAddBoat}>Upload billeder</Text>
@@ -52,7 +63,7 @@ const AddBoat = ({ navigation }) => {
         style={Style.fabButton}
         size="large"
         icon="plus"
-        onPress={() => console.log('Pressed')}
+        onPress={() => pickImage()}
       />
       <Text style={[Style.textAddBoat, {marginTop: 50}]}>Beskrivelse </Text>
       <TextInput
@@ -62,6 +73,7 @@ const AddBoat = ({ navigation }) => {
         numberOfLines={4}
         maxLength={250} // Set the maximum number of characters allowed
         placeholder='Max 250 tegn'
+        blurOnSubmit = {true}
         onChangeText={value => {
           if (value.length <= 250) { // Limit to 250 characters
             setBoat({ ...boat, boatImage: value });

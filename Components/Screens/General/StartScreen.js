@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
-import BoatImage from '../../../assets/_a9353717-061c-455a-860e-c8845db39c85.jpeg';
+import BoatImage from '../../../assets/_4d6f9277-f42c-42e3-b590-4c77d9537cca.jpeg';
 import { useNavigation } from '@react-navigation/native';
 
 import Style from '../../GlobalStyleSheet/Style';
 
 const StartScreen = () => {
     const navigation = useNavigation();
+    
     return (
         <View style={styles.container}>
             <Image source={BoatImage} style={{ width: 250, height: 200 }} />
@@ -17,14 +18,14 @@ const StartScreen = () => {
                 <Button
                     mode="contained"
                     onPress={() => navigation.navigate('Opret profil')}
-                    style={[Style.profileEditbutton, {width: 300, marginTop: 30}]}
+                    style={[Style.profileEditbutton, {width: 300, backgroundColor: '#4097ed'}]}
                 >
                     Opret Profil
                 </Button>
                 <Button
                     mode="contained"
                     onPress={() => navigation.navigate('Log Ind')}
-                    style={[Style.profileEditbutton, {marginTop: 15}]}
+                    style={[Style.profileEditbutton, {backgroundColor: '#004fbd'}]}
                 >
                     Log Ind
                 </Button>

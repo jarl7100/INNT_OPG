@@ -1,11 +1,13 @@
 
-import { View, Text, TextInput, Button, ActivityIndicator, Switch, Image } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, Switch, Image, KeyboardAvoidingView } from 'react-native';
+import { Button } from 'react-native-paper';
 import * as React from "react";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase';
 import { storeToken} from "../../utils/AuthService.js";
 import Style from '../../GlobalStyleSheet/Style.js';
 import { useNavigation } from '@react-navigation/native';
+import BoatImage from '../../../assets/_4d6f9277-f42c-42e3-b590-4c77d9537cca.jpeg';
 
 //denne screen er til at brugeren kan oprette en profil
 
@@ -73,7 +75,14 @@ export default function CreateUser({}) {
   }
 
   return (
-    <View style={Style.container}>
+    <KeyboardAvoidingView
+    style={Style.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+      <Image 
+        source={BoatImage}
+        style={[Style.logo, {width: 250, height: 200}]}
+      />
       <TextInput
         style={Style.input}
         placeholder="Fornavn"
@@ -99,24 +108,32 @@ export default function CreateUser({}) {
         value={email}
       />
       <TextInput
-        style={Style.input}
+        style={[Style.input]}
         placeholder="Adgangskode"
         onChangeText={setPassword}
         value={password}
         secureTextEntry={true}
       />
-      <Text style={Style.label}>Er du bådejer?</Text>
+
+      <View/>
+      <Text>Er du bådejer?</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={type ? "#fff" : "#f4f3f4"}
         onValueChange={() => setType(!type)}
         value={type}
       />
-      <Button title="Opret profil" onPress={createUser} />
+      <Button mode="contained" onPress={createUser} style={[Style.profileEditbutton, {backgroundColor: '#4097ed', marginBottom: 10}]}>
+        Opret Profil
+      </Button>
       {loadingState ? <ActivityIndicator size="large" color="#0000ff" /> : null}
       <Text> Har du allerede en profil? Log ind her</Text>
-      <Button title="Log ind" onPress={() => navigation.navigate('Log Ind')}> </Button>
-    </View>
+      <Button mode="contained" onPress={() => navigation.navigate('Log Ind')} style={Style.profileEditbutton}>
+        Log Ind
+      </Button>
+      <View/>
+
+    </KeyboardAvoidingView>
   );
 }
 

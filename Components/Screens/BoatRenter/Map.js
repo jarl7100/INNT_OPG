@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import { SafeAreaView, Image, Text } from 'react-native';
+import { SafeAreaView, Image, Text} from 'react-native';
 import { Button } from 'react-native-paper';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { useNavigation } from '@react-navigation/native';
 
 import Style from '../../GlobalStyleSheet/Style.js';
 
@@ -27,7 +26,6 @@ function Map() {
                         <Marker
                             coordinate={{ latitude: 55.726531, longitude: 12.587744 }}
                             title={"My Marker"}
-                            description={"This is my marker"}
                         >
                            { /* Her laver vi en callout som viser information om båden når brugeren trykker på markeren*/}
                             <Callout>
