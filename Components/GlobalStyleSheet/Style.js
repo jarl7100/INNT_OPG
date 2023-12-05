@@ -254,7 +254,7 @@ textCardOwner: {
 },
   profileEditbutton: {
     marginTop: 10,
-    backgroundColor: 'blue',
+    backgroundColor: '#4097ed',
     borderRadius: 10,
   },
 postEditbutton: {

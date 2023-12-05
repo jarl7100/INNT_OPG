@@ -4,6 +4,7 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Henter alle siderne der skal bruges i stacken 
+import StartScreen from '../Screens/General/StartScreen.js';
 import CreateUser from '../Screens/Authentication/CreateUser.js';
 import Login from '../Screens/Authentication/Login.js';
 import TabNavigatorBoatRenter from './TabNavigatorBoatRenter.js';
@@ -21,6 +22,11 @@ function StackNavigator() {
   return (
     // Her laver vi en stack navigator som bruges til at navigere mellem siderne i appen
     <Stack.Navigator>
+      <Stack.Screen
+        name="Welcome"
+        component={StartScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Opret profil"
         component={CreateUser}
