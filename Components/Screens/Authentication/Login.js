@@ -1,10 +1,12 @@
-import { View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, Image, KeyboardAvoidingView } from 'react-native';
+import { Button } from 'react-native-paper';
 import { storeToken} from "../../utils/AuthService.js";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase';
 import { useNavigation } from '@react-navigation/native';
 import Style from '../../GlobalStyleSheet/Style.js';
+import BoatImage from '../../../assets/_4d6f9277-f42c-42e3-b590-4c77d9537cca.jpeg';
 
 
 //Denne skærm er til at brugeren kan logge ind hvis han allerede har en konto
@@ -54,9 +56,14 @@ export default function Login({}) {
   }
 
   return (
-    <View         
+    <KeyboardAvoidingView    
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}     
     style={Style.container}>
-      <TextInput 
+      <Image 
+    source={BoatImage}
+    style={[Style.logo, {width: 200, height: 170}]}
+  />
+        <TextInput 
         style={Style.input}
         placeholder="Email"
         onChangeText={setEmail}
@@ -71,13 +78,16 @@ export default function Login({}) {
       
         secureTextEntry={true}
       />
-      <Button title="Log Ind" onPress={loginUser} />
+
+      <Button onPress={loginUser} mode="contained" style={[Style.profilBoatOwnerCard]}>
+      Log ind
+      </Button>
 
       {/* //Tenary operator der viser en loading bar hvis loadingstate er true */}
       {loadingState ? <ActivityIndicator size="large" color="#0000ff" /> : null}
       
 
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

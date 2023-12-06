@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import {Button} from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -63,7 +64,14 @@ export default function TabNavigatorBoatOwner() {
       })}
       // Her laver vi de forskellige sider i appen
       >
-        <Tab.Screen name="Profile"  component={ProfilBoatOwner}/>
+        <Tab.Screen name="Profile"  component={ProfilBoatOwner}
+         options={{
+          headerRight: () => (<Button
+              onPress={() => alert('This is a button!')}
+              title="Help"
+            />
+          ),
+        }}/>
         <Tab.Screen name="Add Boat" component={AddBoat} />
         <Tab.Screen name="Your Reservations" component={YourReservation} />
       </Tab.Navigator>

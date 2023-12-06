@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { View, Text, TextInput } from "react-native";
-import { Button, FAB } from "react-native-paper";
-import PocketBase from "pocketbase";
+import React, { useState } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { Button, FAB } from 'react-native-paper';
+import PocketBase from 'pocketbase';
 
-import Style from "../../GlobalStyleSheet/Style.js";
+import Style from '../../GlobalStyleSheet/Style.js';
 
 import { getID } from "../../utils/AuthService.js";
 
@@ -31,61 +31,45 @@ const AddBoat = ({ navigation }) => {
     boatControlsystem: "",
   });
 
+
   async function addBoatToPocketbase() {
-    const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
-    const id = await getID();
-      console.log(id)
-      setBoat(boat.boatOwner = id);
-    console.log(boat);
+    const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
+
+    setBoat({ ...boat, boatOwner: await getID() })
+    console.log(boat)
 
     try {
-      await pb.collection("boatPosts").create(boat);
-      navigation.navigate("Profile");
-  
+
+
+
+      await pb.collection('boatPosts').create(boat);
+
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
+
     }
+
   }
   return (
-    <View>
-      <Text style={[Style.textAddBoat, { marginTop: 10 }]}>Generelt </Text>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-        <Text>Title:</Text>
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatTitle}
-          onChangeText={(newValue) => setBoat({ ...boat, boatTitle: newValue })}
-        />
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-        <Text>Båd type:</Text>
-        <TextInput
-          style={Style.textInput}
-          value={boat.boatHarbour}
-          onChangeText={(newValue) => setBoat({ ...boat, boatHarbour: newValue })}
-        />
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-        <Text>Båd havn:</Text>
-        <TextInput
-          style={Style.textInput}
-          value={boat.typeOfBoat}
-          onChangeText={(newValue) => setBoat({ ...boat, typeOfBoat: newValue })}
-        />
-      </View>
-
-      <Text style={[Style.textAddBoat, { marginTop: 50 }]}>Beskrivelse </Text>
+    <View style={Style.addBoatViewer1}>
+      <Text style={Style.textAddBoat}>Upload billeder</Text>
+      <FAB
+        style={Style.fabButton}
+        size="large"
+        icon="plus"
+        onPress={() => console.log('Pressed')}
+      />
+      <Text style={[Style.textAddBoat, {marginTop: 50}]}>Beskrivelse </Text>
       <TextInput
         style={[Style.textInputDescription, { width: "90%" }]}
         value={boat.boatDescription}
         multiline={true}
         numberOfLines={4}
         maxLength={250} // Set the maximum number of characters allowed
-        placeholder="Max 250 tegn"
-        onChangeText={(value) => {
-          if (value.length <= 250) {
-            // Limit to 250 characters
-            setBoat({ ...boat, boatDescription: value });
+        placeholder='Max 250 tegn'
+        onChangeText={value => {
+          if (value.length <= 250) { // Limit to 250 characters
+            setBoat({ ...boat, boatImage: value });
           }
         }}
       />

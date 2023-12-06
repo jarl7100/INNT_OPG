@@ -61,7 +61,7 @@ export default function Communication({ route }) {
               inverted // Scrolls messages from bottom to top
             />
           )}
-          <View style={styles.horizontal}>
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.horizontal} >
             <TextInput
               style={styles.textInput}
               placeholder="Write a message"
@@ -69,7 +69,7 @@ export default function Communication({ route }) {
               value={message}
             />
             <Button title="Send" onPress={() => sendMessage()} />
-          </View>
+          </KeyboardAvoidingView>
         </KeyboardAvoidingView>
       );
     }
