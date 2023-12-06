@@ -1,13 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-<<<<<<< HEAD
 import Pocketbase from 'pocketbase';
 import { useEffect, useState } from 'react'
 import LoadingScreen from '../LoadingScreen';
-=======
-import Style from '../../GlobalStyleSheet/Style.js';
->>>>>>> 851afee01454c4ca20d39e4323bd99925b0005de
 
 const BoatPost = ({ route }) => {
     const { boatID } = route.params;
@@ -24,6 +20,7 @@ const BoatPost = ({ route }) => {
     useEffect(() => {
         getBoatInformation();
     }, [])
+    
   return (
     <View style={styles.container}>
       {boat.length === 0 ? <LoadingScreen /> : <BoatPostCard boat={boat}/>}  
@@ -51,7 +48,6 @@ function BoatPostCard({boat}) {
       <Text style={styles.title3}>{boat.boatPrice},-/uge</Text>
       <Text style={styles.title4}>📍{boat.boatHarbour}</Text>
       <Text style={styles.title5}>Beskrivelse</Text>
-<<<<<<< HEAD
       <Text style={styles.title6}>{boat.boatDescription}</Text>
       <Text style={styles.title7}>Specifikationer</Text>
       <Text style={styles.title8}>Længde: {boat.boatLength}</Text>
@@ -62,37 +58,6 @@ function BoatPostCard({boat}) {
       <Text style={styles.title13}>Styresystem:</Text>
       <Text style={styles.title14}>Tv:</Text>
       <Text style={styles.title15}>Model: {boat.boatBrand}</Text>
-=======
-      <Text style={styles.title6}>Mauris eget eros cursus, pulvinar nisi eu, euismod ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed mauris orci, dapibus ut sodales ac, condimentum at elit. Nulla condimentum tempus nulla, vitae </Text>
-      <Text style={[styles.title5, {marginTop: 10, marginBottom: 15,}]}>Specifikationer</Text>
-      <View style={Style.addBoatViewer2}>
-        <View>
-          <Text style={{ marginBottom: 12 }}>Længde: </Text>
-          <Text style={{ marginBottom: 12 }}>Rum: </Text>
-          <Text style={{ marginBottom: 12 }}>Antal bad: </Text>
-          <Text style={{ marginBottom: 12 }}>Byggeår: </Text>
-        </View>
-        <View>
-          <Text style={{ marginBottom: 12 }}>... </Text>
-          <Text style={{ marginBottom: 12 }}>... </Text>
-          <Text style={{ marginBottom: 12 }}>... </Text>
-          <Text style={{ marginBottom: 12 }}>... </Text>
-        </View>
-
-        <View>
-          <Text style={{ marginBottom: 12}}>Gummibåd: </Text>
-          <Text style={{ marginBottom: 12}}>Styresystem: </Text>
-          <Text style={{ marginBottom: 12}}>Tv: </Text>
-          <Text style={{ marginBottom: 12}}>Model: </Text>
-        </View>
-        <View>
-          <Text style={{ marginBottom: 12 }}>...</Text>
-          <Text style={{ marginBottom: 12 }}>...</Text>
-          <Text style={{ marginBottom: 12 }}>...</Text>
-          <Text style={{ marginBottom: 12 }}>...</Text>
-        </View>
-        </View>
->>>>>>> 851afee01454c4ca20d39e4323bd99925b0005de
       <View style={styles.container2}>
 
       <View style={{ flexDirection: "row" }}>
@@ -107,7 +72,6 @@ function BoatPostCard({boat}) {
         <Text style={Style.postEditButtonText}>Slet</Text>
     </Pressable>
     </View>
-<<<<<<< HEAD
     <Button style={styles.postEditbutton} mode="contained" onPress={() => navigation.navigate('Update Boat Post', { boatID: boat.id})}>
         Rediger opslag
     </Button>
@@ -117,11 +81,6 @@ function BoatPostCard({boat}) {
     </>
     )
 }
-=======
-    </View>
-  );
-};
->>>>>>> 851afee01454c4ca20d39e4323bd99925b0005de
 
 const styles = StyleSheet.create({
 container: {
