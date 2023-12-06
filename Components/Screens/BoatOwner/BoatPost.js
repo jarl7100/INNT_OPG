@@ -2,47 +2,76 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import Pocketbase from 'pocketbase';
+import { useEffect, useState } from 'react'
+import LoadingScreen from '../LoadingScreen';
 
-const BoatPost = () => {
-    const navigation = useNavigation();
-    const deleteBoatPost = () => {
-        console.log('delete')
-        navigation.navigate("Profile");
+const BoatPost = ({ route }) => {
+    const { boatID } = route.params;
+    const [boat, setBoat] = useState([]);
+    const pb = new Pocketbase('https://pocketbaselucashunt.fly.dev');
+   
+
+    async function getBoatInformation() {
+        const record = await pb.collection('boatPosts').getOne(boatID);
+        setBoat(record)
     }
+
+
+    useEffect(() => {
+        getBoatInformation();
+    }, [])
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bavarian Yacht</Text>
+      {boat.length === 0 ? <LoadingScreen /> : <BoatPostCard boat={boat}/>}  
+    </View>
+  );
+};
+
+
+function BoatPostCard({boat}) {
+    const navigation = useNavigation();
+    const pb = new Pocketbase('https://pocketbaselucashunt.fly.dev');
+    const deleteBoatPost = async () => {
+        await pb.collection('boatPosts').delete(boat.id);
+        navigation.navigate("Profile");
+    }
+
+   
+    return (
+        <>
+        <Text style={styles.title}>{boat.boatTitle}</Text>
       <Text style={styles.title1}>4,9 ⭐️</Text>
 <Image source={{uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp'}}
        style={styles.Image} />
-      <Text style={styles.title2}>Speedbåd</Text>
-      <Text style={styles.title3}>1500,-/uge</Text>
-      <Text style={styles.title4}>📍Gilleleje, DK</Text>
+      <Text style={styles.title2}>{boat.boatTitle}</Text>
+      <Text style={styles.title3}>{boat.boatPrice},-/uge</Text>
+      <Text style={styles.title4}>📍{boat.boatHarbour}</Text>
       <Text style={styles.title5}>Beskrivelse</Text>
-      <Text style={styles.title6}>Mauris eget eros cursus, pulvinar nisi eu, euismod ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed mauris orci, dapibus ut sodales ac, condimentum at elit. Nulla condimentum tempus nulla, vitae dignissim nisi scelerisque vel. Vestibulum blandit purus nec rutrum hendrerit.</Text>
+      <Text style={styles.title6}>{boat.boatDescription}</Text>
       <Text style={styles.title7}>Specifikationer</Text>
-      <Text style={styles.title8}>Længde:</Text>
-      <Text style={styles.title9}>Rum:</Text>
+      <Text style={styles.title8}>Længde: {boat.boatLength}</Text>
+      <Text style={styles.title9}>Rum: </Text>
       <Text style={styles.title10}>Antal bad:</Text>
-      <Text style={styles.title11}>Byggeår:</Text>
+      <Text style={styles.title11}>Byggeår: {boat.boatYear}</Text>
       <Text style={styles.title12}>Gummibåd:</Text>
       <Text style={styles.title13}>Styresystem:</Text>
       <Text style={styles.title14}>Tv:</Text>
-      <Text style={styles.title15}>Model:</Text>
+      <Text style={styles.title15}>Model: {boat.boatBrand}</Text>
       <View style={styles.container2}>
     <Button style={styles.postDeletebutton} mode="contained" onPress={() => deleteBoatPost()}>
         Slet
     </Button>
     </View>
-    <Button style={styles.postEditbutton} mode="contained" onPress={() => navigation.navigate("Update Boat Post")}>
+    <Button style={styles.postEditbutton} mode="contained" onPress={() => navigation.navigate('Update Boat Post', { boatID: boat.id})}>
         Rediger opslag
     </Button>
     <Button style={styles.postReviewsbutton} mode="contained" onPress={() => navigation.navigate("Your Reviews")}>
         Anmeldelser
     </Button>
-    </View>
-  );
-};
+    </>
+    )
+}
 
 const styles = StyleSheet.create({
 container: {

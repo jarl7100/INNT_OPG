@@ -78,24 +78,29 @@ export default function Communication({ route }) {
       container: {
         flex: 1,
         backgroundColor: '#fff',
+        
       },
       messageList: {
         flexGrow: 1,
+        paddingHorizontal: 10
       },
       messageContainer: {
         borderRadius: 8,
         padding: 10,
         marginVertical: 5,
         maxWidth: '80%',
+        
       },
       receivedMessage: {
         backgroundColor: 'darkgray', // Background color for received messages
-        alignSelf: 'flex-start', // Align received messages to the left
+        alignSelf: 'flex-start',
+         // Align received messages to the left
       },
       sentMessage: {
         backgroundColor: '#4097ed', // Background color for sent messages
         alignSelf: 'flex-end',
-        color: 'white', // Align sent messages to the right
+        color: 'white',
+         // Align sent messages to the right
       },
       messageText: {
         fontSize: 16,

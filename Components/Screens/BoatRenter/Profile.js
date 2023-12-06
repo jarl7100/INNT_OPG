@@ -11,7 +11,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import Style from '../../GlobalStyleSheet/Style.js'
 
-export default function Profile({}) {
+export default function Profile({route}) {
+  const [reloadFlag, setReloadFlag] = useState(route.params?.reloadFlag);
+  
   const navigation = useNavigation();
   const [profile, setProfile] = useState([]);
   const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
@@ -24,7 +26,8 @@ export default function Profile({}) {
 }
     useEffect(() => {
       getUserInformation();
-    }, []);
+      setReloadFlag(false);
+    }, [reloadFlag]);
 
     async function loguserout() {
       await logout();

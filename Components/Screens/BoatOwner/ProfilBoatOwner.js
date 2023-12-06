@@ -11,9 +11,11 @@ import { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase';
 import { getID, setId, logout } from '../../utils/AuthService.js'
 
-const ProfilBoatOwner = () => {
+const ProfilBoatOwner = ({route}) => {
+    
     const navigation = useNavigation();
     const [profile, setProfile] = useState([]);
+    const [boat, setBoat] = useState([]);
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
 
     async function loguserout() {
@@ -27,11 +29,38 @@ const ProfilBoatOwner = () => {
         const ID = await getID()
         const record = await pb.collection('users').getOne(ID);
         setProfile(record)
-        console.log(record)
+   
+
     }
+
+   async function getBoatInformation() {
+        const ID = await getID()
+        const filter = `boatOwner = '${ID}'`;
+        try {
+        const data = await pb.collection('boatPosts').getFirstListItem(filter);
+        setBoat(data)
+        } catch (error) {
+            console.error('Error:', error);
+            
+        }
+          
+      }
+
+      function navigateToBoatPost(boatID) {
+        
+        if(boatID === undefined) {
+            navigation.navigate('Add Boat');
+        } else {
+        navigation.navigate('Boat Post', { boatID: boatID});
+            }
+      }
+   
+
     useEffect(() => {
         getUserInformation();
-    }, []);
+        getBoatInformation();
+        
+    }, [route.params]);
 
     return (
         <View style={Style.profileOwnerContainer} >
@@ -71,19 +100,19 @@ const ProfilBoatOwner = () => {
             <View style={Style.profileOwnerCardViewer}>
                 <Card style={Style.profilBoatOwnerCard} >
                     <Card.Content>
-                        <Card style={Style.profilBoatOwnerInsideCard} onPress={() => navigation.navigate('Boat Post')}>
-                            <Card.Title title="Your boat" titleStyle={{ textAlign: 'center', fontSize: 20, color: "#4097ed", fontWeight: 'bold', marginBottom: -5 }} />
+                        <Card style={Style.profilBoatOwnerInsideCard} onPress={() => navigateToBoatPost(boat.id)}>
+                            <Card.Title title={boat > 0 ? "Your boat" : "Opret båd"} titleStyle={{ textAlign: 'center', fontSize: 20, color: "#4097ed", fontWeight: 'bold', marginBottom: -5 }} />
                             <Card.Content>
                                 <Divider />
                                 <Card.Cover style={Style.cardImagePost} source={{ uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp' }} />
                                 <Text style={Style.textCardOwnerTop1}>
-                                    {profile.boatName || 'Ikke angivet'}
+                                    {boat.boatTitle || 'Ikke angivet'}
                                 </Text>
                                 <Text style={Style.textCardOwner2}>
-                                    {<Ionicons name="location-outline" size={22} />} {profile.boatName || 'Ikke angivet'}
+                                    {<Ionicons name="location-outline" size={22} />} {boat.boatHarbour || 'Ikke angivet'}
                                 </Text>
                                 <Text style={Style.textCardOwner3}>
-                                    {<Ionicons name="pricetag-outline" size={27} />} {profile.boatPrice || '1000'},- /uge
+                                    {<Ionicons name="pricetag-outline" size={27} />} {boat.boatPrice || 'Ikke angivet'},- /uge
                                 </Text>
                             </Card.Content>
                         </Card>
