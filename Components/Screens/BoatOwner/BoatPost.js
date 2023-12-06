@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Pocketbase from 'pocketbase';
 import { useEffect, useState } from 'react'
@@ -9,7 +9,7 @@ const BoatPost = ({ route }) => {
     const { boatID } = route.params;
     const [boat, setBoat] = useState([]);
     const pb = new Pocketbase('https://pocketbaselucashunt.fly.dev');
-   
+
 
     async function getBoatInformation() {
         const record = await pb.collection('boatPosts').getOne(boatID);
@@ -20,10 +20,9 @@ const BoatPost = ({ route }) => {
     useEffect(() => {
         getBoatInformation();
     }, [])
-    
   return (
     <View style={styles.container}>
-      {boat.length === 0 ? <LoadingScreen /> : <BoatPostCard boat={boat}/>}  
+          {boat.length === 0 ? <LoadingScreen /> : <BoatPostCard boat={boat}/>}  
     </View>
   );
 };
@@ -37,14 +36,14 @@ function BoatPostCard({boat}) {
         navigation.navigate("Profile");
     }
 
-   
+
     return (
         <>
         <Text style={styles.title}>{boat.boatTitle}</Text>
       <Text style={styles.title1}>4,9 ⭐️</Text>
 <Image source={{uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp'}}
        style={styles.Image} />
-      <Text style={styles.title2}>{boat.boatTitle}</Text>
+       <Text style={styles.title2}>{boat.boatTitle}</Text>
       <Text style={styles.title3}>{boat.boatPrice},-/uge</Text>
       <Text style={styles.title4}>📍{boat.boatHarbour}</Text>
       <Text style={styles.title5}>Beskrivelse</Text>
@@ -59,18 +58,9 @@ function BoatPostCard({boat}) {
       <Text style={styles.title14}>Tv:</Text>
       <Text style={styles.title15}>Model: {boat.boatBrand}</Text>
       <View style={styles.container2}>
-
-      <View style={{ flexDirection: "row" }}>
-      <Pressable style={styles.postEditbutton} onPress={() => navigation.navigate("Update Boat Post")}>
-        <Text style={Style.postEditButtonText}>Rediger</Text>
-    </Pressable>
-    <Pressable style={styles.postEditbutton} title='Andmeldser' onPress={() => navigation.navigate("Your Reviews")}>
-        <Text style={Style.postEditButtonText}>Anmeldelser</Text>
-    </Pressable>
-    </View>
-    <Pressable style={styles.postDeletebutton} title='Slet' onPress={() => deleteBoatPost()}>
-        <Text style={Style.postEditButtonText}>Slet</Text>
-    </Pressable>
+    <Button style={styles.postDeletebutton} mode="contained" onPress={() => deleteBoatPost()}>
+        Slet
+    </Button>
     </View>
     <Button style={styles.postEditbutton} mode="contained" onPress={() => navigation.navigate('Update Boat Post', { boatID: boat.id})}>
         Rediger opslag
@@ -88,6 +78,7 @@ container: {
     backgroundColor: '#fff',
 },
 container2: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
 },
@@ -145,14 +136,20 @@ title4: {
 },
 title5: {
     fontSize: 25,
-    margin: 30,
-    marginBottom: 10,
+    marginBottom: 30,
     fontWeight: 'bold',
-    alignSelf: 'center-right',
+    position: 'absolute',
+    top: 220,
+    left: 27,
+    alignSelf: 'center',
 },
 title6: {
     fontSize: 15,
+    marginBottom: 30,
+    position: 'absolute',
     width: "85%",
+    top: 255,
+    left: 27,
     alignSelf: 'center',
 },
 title7: {
@@ -242,24 +239,26 @@ title15: {
 },
 postDeletebutton: {
     width: '90%',
+    position: 'absolute',
+    bottom: 50,
     backgroundColor: '#d60419',
     borderRadius: 10, 
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    borderRadius: 10,
-    elevation: 3,
 },
 postEditbutton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
     width: '42%',
-    margin: 10,
-    borderRadius: 10,
-    elevation: 3,
+    position: 'absolute',
+    bottom: 100,
     backgroundColor: '#4097ed',
-}
+    borderRadius: 10, 
+    marginLeft: 20,
+},
+postReviewsbutton: {
+    width: '42%',
+    position: 'absolute',
+    bottom: 100,
+    backgroundColor: '#4097ed',
+    borderRadius: 10, 
+    marginLeft: 207,
+},
 });
-
 export default BoatPost;
