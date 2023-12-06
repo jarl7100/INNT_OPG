@@ -21,7 +21,7 @@ const ProfilBoatOwner = ({route}) => {
         await logout();
         navigation.reset({
             index: 0,
-            routes: [{name: 'Opret profil'}],
+            routes: [{name: 'Welcome'}],
           })}
     const getUserInformation = async () => {
         const ID = await getID()
