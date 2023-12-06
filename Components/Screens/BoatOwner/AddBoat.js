@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native';
 import { Button, FAB } from 'react-native-paper';
 import PocketBase from 'pocketbase';
 
@@ -7,7 +7,7 @@ import Style from '../../GlobalStyleSheet/Style.js';
 
 import { getID } from "../../utils/AuthService.js";
 
-const AddBoat = ({ navigation }) => {
+const AddBoat = () => {
 
   //mangler datovælger
   const [boat, setBoat] = useState({
@@ -46,12 +46,27 @@ const AddBoat = ({ navigation }) => {
 
     } catch (error) {
       console.error('Error:', error);
+    }
+  }
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
 
   }
   return (
-    <View style={Style.addBoatViewer1}>
+    <KeyboardAvoidingView style={Style.addBoatViewer1}>
       <Text style={Style.textAddBoat}>Upload billeder</Text>
       <FAB
         style={Style.fabButton}
@@ -65,10 +80,10 @@ const AddBoat = ({ navigation }) => {
         value={boat.boatDescription}
         multiline={true}
         numberOfLines={4}
-        maxLength={250} // Set the maximum number of characters allowed
+        maxLength={250} 
         placeholder='Max 250 tegn'
         onChangeText={value => {
-          if (value.length <= 250) { // Limit to 250 characters
+          if (value.length <= 250) { 
             setBoat({ ...boat, boatImage: value });
           }
         }}
@@ -179,7 +194,7 @@ const AddBoat = ({ navigation }) => {
       >
         {<Text style={Style.addBoatButtonText}> Add Boat </Text>}
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

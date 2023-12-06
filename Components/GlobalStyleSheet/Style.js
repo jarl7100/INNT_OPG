@@ -274,7 +274,7 @@ cardImagePost: {
   shadowOpacity: 0.4,
 },
 postEditButtonText: {
-  color: '#4097ed',
+  color: '#ffffff',
   fontSize: 18,
 },
 profilBoatOwnerInsideCard : {

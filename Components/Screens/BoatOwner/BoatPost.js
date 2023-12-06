@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+<<<<<<< HEAD
 import Pocketbase from 'pocketbase';
 import { useEffect, useState } from 'react'
 import LoadingScreen from '../LoadingScreen';
+=======
+import Style from '../../GlobalStyleSheet/Style.js';
+>>>>>>> 851afee01454c4ca20d39e4323bd99925b0005de
 
 const BoatPost = ({ route }) => {
     const { boatID } = route.params;
@@ -48,6 +51,7 @@ function BoatPostCard({boat}) {
       <Text style={styles.title3}>{boat.boatPrice},-/uge</Text>
       <Text style={styles.title4}>📍{boat.boatHarbour}</Text>
       <Text style={styles.title5}>Beskrivelse</Text>
+<<<<<<< HEAD
       <Text style={styles.title6}>{boat.boatDescription}</Text>
       <Text style={styles.title7}>Specifikationer</Text>
       <Text style={styles.title8}>Længde: {boat.boatLength}</Text>
@@ -58,11 +62,52 @@ function BoatPostCard({boat}) {
       <Text style={styles.title13}>Styresystem:</Text>
       <Text style={styles.title14}>Tv:</Text>
       <Text style={styles.title15}>Model: {boat.boatBrand}</Text>
+=======
+      <Text style={styles.title6}>Mauris eget eros cursus, pulvinar nisi eu, euismod ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed mauris orci, dapibus ut sodales ac, condimentum at elit. Nulla condimentum tempus nulla, vitae </Text>
+      <Text style={[styles.title5, {marginTop: 10, marginBottom: 15,}]}>Specifikationer</Text>
+      <View style={Style.addBoatViewer2}>
+        <View>
+          <Text style={{ marginBottom: 12 }}>Længde: </Text>
+          <Text style={{ marginBottom: 12 }}>Rum: </Text>
+          <Text style={{ marginBottom: 12 }}>Antal bad: </Text>
+          <Text style={{ marginBottom: 12 }}>Byggeår: </Text>
+        </View>
+        <View>
+          <Text style={{ marginBottom: 12 }}>... </Text>
+          <Text style={{ marginBottom: 12 }}>... </Text>
+          <Text style={{ marginBottom: 12 }}>... </Text>
+          <Text style={{ marginBottom: 12 }}>... </Text>
+        </View>
+
+        <View>
+          <Text style={{ marginBottom: 12}}>Gummibåd: </Text>
+          <Text style={{ marginBottom: 12}}>Styresystem: </Text>
+          <Text style={{ marginBottom: 12}}>Tv: </Text>
+          <Text style={{ marginBottom: 12}}>Model: </Text>
+        </View>
+        <View>
+          <Text style={{ marginBottom: 12 }}>...</Text>
+          <Text style={{ marginBottom: 12 }}>...</Text>
+          <Text style={{ marginBottom: 12 }}>...</Text>
+          <Text style={{ marginBottom: 12 }}>...</Text>
+        </View>
+        </View>
+>>>>>>> 851afee01454c4ca20d39e4323bd99925b0005de
       <View style={styles.container2}>
-    <Button style={styles.postDeletebutton} mode="contained" onPress={() => deleteBoatPost()}>
-        Slet
-    </Button>
+
+      <View style={{ flexDirection: "row" }}>
+      <Pressable style={styles.postEditbutton} onPress={() => navigation.navigate("Update Boat Post")}>
+        <Text style={Style.postEditButtonText}>Rediger</Text>
+    </Pressable>
+    <Pressable style={styles.postEditbutton} title='Andmeldser' onPress={() => navigation.navigate("Your Reviews")}>
+        <Text style={Style.postEditButtonText}>Anmeldelser</Text>
+    </Pressable>
     </View>
+    <Pressable style={styles.postDeletebutton} title='Slet' onPress={() => deleteBoatPost()}>
+        <Text style={Style.postEditButtonText}>Slet</Text>
+    </Pressable>
+    </View>
+<<<<<<< HEAD
     <Button style={styles.postEditbutton} mode="contained" onPress={() => navigation.navigate('Update Boat Post', { boatID: boat.id})}>
         Rediger opslag
     </Button>
@@ -72,6 +117,11 @@ function BoatPostCard({boat}) {
     </>
     )
 }
+=======
+    </View>
+  );
+};
+>>>>>>> 851afee01454c4ca20d39e4323bd99925b0005de
 
 const styles = StyleSheet.create({
 container: {
@@ -79,7 +129,6 @@ container: {
     backgroundColor: '#fff',
 },
 container2: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
 },
@@ -137,20 +186,14 @@ title4: {
 },
 title5: {
     fontSize: 25,
-    marginBottom: 30,
+    margin: 30,
+    marginBottom: 10,
     fontWeight: 'bold',
-    position: 'absolute',
-    top: 220,
-    left: 27,
-    alignSelf: 'center',
+    alignSelf: 'center-right',
 },
 title6: {
     fontSize: 15,
-    marginBottom: 30,
-    position: 'absolute',
     width: "85%",
-    top: 255,
-    left: 27,
     alignSelf: 'center',
 },
 title7: {
@@ -240,27 +283,24 @@ title15: {
 },
 postDeletebutton: {
     width: '90%',
-    position: 'absolute',
-    bottom: 50,
     backgroundColor: '#d60419',
     borderRadius: 10, 
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    borderRadius: 10,
+    elevation: 3,
 },
 postEditbutton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
     width: '42%',
-    position: 'absolute',
-    bottom: 100,
+    margin: 10,
+    borderRadius: 10,
+    elevation: 3,
     backgroundColor: '#4097ed',
-    borderRadius: 10, 
-    marginLeft: 20,
-},
-postReviewsbutton: {
-    width: '42%',
-    position: 'absolute',
-    bottom: 100,
-    backgroundColor: '#4097ed',
-    borderRadius: 10, 
-    marginLeft: 207,
-},
+}
 });
 
 export default BoatPost;
