@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native';
-import { Button, FAB } from 'react-native-paper';
-import PocketBase from 'pocketbase';
+import React, { useState } from "react";
+import { View, Text, TextInput } from "react-native";
+import { Button, FAB } from "react-native-paper";
+import PocketBase from "pocketbase";
 
-import Style from '../../GlobalStyleSheet/Style.js';
-
+import Style from "../../GlobalStyleSheet/Style.js";
 import { getID } from "../../utils/AuthService.js";
 
-const AddBoat = () => {
+const AddBoat = ({ navigation }) => {
 
   //mangler datovælger
   const [boat, setBoat] = useState({
@@ -29,65 +28,66 @@ const AddBoat = () => {
     boatBaths: 0,
     boatInflatableBoat: "",
     boatControlsystem: "",
-  });
-
+  })
 
   async function addBoatToPocketbase() {
-    const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
-
-    setBoat({ ...boat, boatOwner: await getID() })
-    console.log(boat)
+    const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
+    const id = await getID();
+      console.log(id)
+      setBoat(boat.boatOwner = id);
+    console.log(boat);
 
     try {
-
-
-
-      await pb.collection('boatPosts').create(boat);
+      await pb.collection("boatPosts").create(boat);
+      navigation.navigate("Profile");
 
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-  }
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-
   }
   return (
-    <KeyboardAvoidingView style={Style.addBoatViewer1}>
-      <Text style={Style.textAddBoat}>Upload billeder</Text>
-      <FAB
-        style={Style.fabButton}
-        size="large"
-        icon="plus"
-        onPress={() => console.log('Pressed')}
-      />
-      <Text style={[Style.textAddBoat, {marginTop: 50}]}>Beskrivelse </Text>
+    <View>
+      <Text style={[Style.textAddBoat, { marginTop: 10 }]}>Generelt </Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <Text>Title:</Text>
+        <TextInput
+          style={Style.textInput}
+          value={boat.boatTitle}
+          onChangeText={(newValue) => setBoat({ ...boat, boatTitle: newValue })}
+        />
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <Text>Båd type:</Text>
+        <TextInput
+          style={Style.textInput}
+          value={boat.boatHarbour}
+          onChangeText={(newValue) => setBoat({ ...boat, boatHarbour: newValue })}
+        />
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <Text>Båd havn:</Text>
+        <TextInput
+          style={Style.textInput}
+          value={boat.typeOfBoat}
+          onChangeText={(newValue) => setBoat({ ...boat, typeOfBoat: newValue })}
+        />
+      </View>
+
+      <Text style={[Style.textAddBoat, { marginTop: 50 }]}>Beskrivelse </Text>
       <TextInput
-        style={[Style.textInputDescription, { width: "90%" }]}
-        value={boat.boatDescription}
-        multiline={true}
-        numberOfLines={4}
-        maxLength={250} 
-        placeholder='Max 250 tegn'
-        onChangeText={value => {
-          if (value.length <= 250) { 
-            setBoat({ ...boat, boatImage: value });
-          }
-        }}
-      />
+      style={[Style.textInputDescription, { width: "90%" }]}
+      value={boat.boatDescription}
+      multiline={true}
+      numberOfLines={4}
+      maxLength={250} // Set the maximum number of characters allowed
+      placeholder="Max 250 tegn"
+      onChangeText={(value) => {
+        if (value.length <= 250) {
+          // Limit to 250 characters
+          setBoat({ ...boat, boatDescription: value });
+        }
+      }}
+    />
       <Text style={[Style.textAddBoat, { marginTop: 20 }]}>
         Specifikationer
       </Text>
@@ -98,7 +98,6 @@ const AddBoat = () => {
           <Text style={{ marginBottom: 12 }}>Antal bad: </Text>
           <Text style={{ marginBottom: 12 }}>Byggeår: </Text>
         </View>
-
         <View>
           <TextInput
             style={Style.textInput}
@@ -131,7 +130,7 @@ const AddBoat = () => {
         </View>
 
         <View>
-          <Text style={{ marginBottom: 12 }}>Gummibåd: </Text>
+        <Text style={{ marginBottom: 12 }}>Gummibåd: </Text>
           <Text style={{ marginBottom: 12 }}>Styresystem: </Text>
           <Text style={{ marginBottom: 12 }}>Tophastighed: </Text>
           <Text style={{ marginBottom: 12 }}>Model: </Text>
@@ -194,7 +193,7 @@ const AddBoat = () => {
       >
         {<Text style={Style.addBoatButtonText}> Add Boat </Text>}
       </Button>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

@@ -12,14 +12,14 @@ const UpdateBoatPost = ({ route }) => {
   const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
   const [boat, setBoat] = useState([]);
   const { boatID } = route.params;
-  
+
 
   async function getBoatInformation() {
     const filter = `id = '${boatID}'`;
     try {
       const data = await pb.collection("boatPosts").getFirstListItem(filter);
       setBoat(data);
-      
+
     } catch (error) {
       console.error("Error:", error);
     }
@@ -27,7 +27,7 @@ const UpdateBoatPost = ({ route }) => {
 
     async function updateBoatPost() {
         const record = await pb.collection('boatPosts').update(boatID, boat);
-       
+
         navigation.navigate("Profile");
     }
 
