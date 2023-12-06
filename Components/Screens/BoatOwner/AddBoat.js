@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native';
 import { Button, FAB } from 'react-native-paper';
 import PocketBase from 'pocketbase';
 import * as ImagePicker from 'expo-image-picker';
@@ -7,7 +7,7 @@ import Style from '../../GlobalStyleSheet/Style.js';
 
 import { getID } from '../../utils/AuthService.js';
 
-const AddBoat = ({ navigation }) => {
+const AddBoat = () => {
 
   const [boat, setBoat] = useState({
     boatTitle: '',
@@ -41,7 +41,6 @@ const AddBoat = ({ navigation }) => {
   }
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -57,7 +56,7 @@ const AddBoat = ({ navigation }) => {
   };
 
   return (
-    <View style={Style.addBoatViewer1}>
+    <KeyboardAvoidingView style={Style.addBoatViewer1}>
       <Text style={Style.textAddBoat}>Upload billeder</Text>
       <FAB
         style={Style.fabButton}
@@ -71,11 +70,11 @@ const AddBoat = ({ navigation }) => {
         value={boat.boatImage}
         multiline={true}
         numberOfLines={4}
-        maxLength={250} // Set the maximum number of characters allowed
+        maxLength={250} 
         placeholder='Max 250 tegn'
         blurOnSubmit = {true}
         onChangeText={value => {
-          if (value.length <= 250) { // Limit to 250 characters
+          if (value.length <= 250) { 
             setBoat({ ...boat, boatImage: value });
           }
         }}
@@ -88,7 +87,6 @@ const AddBoat = ({ navigation }) => {
           <Text style={{ marginBottom: 12 }}>Antal bad: </Text>
           <Text style={{ marginBottom: 12 }}>Byggeår: </Text>
         </View>
-
 
         <View>
           <TextInput
@@ -169,7 +167,7 @@ const AddBoat = ({ navigation }) => {
       >
         {<Text style={Style.addBoatButtonText}> Add Boat </Text>}
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
