@@ -96,7 +96,7 @@ const ProfilBoatOwner = ({route}) => {
                     <Card style={Style.profilBoatOwnerCard} >
                         <Card.Content>
                         <Card style={Style.profilBoatOwnerInsideCard} onPress={() => navigateToBoatPost(boat.id)}>
-                            <Card.Title title={boat > 0 ? "Your boat" : "Opret båd"} titleStyle={{ textAlign: 'center', fontSize: 20, color: "#4097ed", fontWeight: 'bold', marginBottom: -5 }} />
+                            <Card.Title title={boat.length !== 0 ? "Din Båd" : "Opret båd"} titleStyle={{ textAlign: 'center', fontSize: 20, color: "#4097ed", fontWeight: 'bold', marginBottom: -5 }} />
                             <Card.Content>
                                 <Divider />
                                 <Card.Cover style={Style.cardImagePost} source={{ uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp' }} />

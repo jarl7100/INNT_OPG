@@ -8,54 +8,79 @@ import LoadingScreen from '../LoadingScreen';
 const BoatPost = ({ route }) => {
     const { boatID } = route.params;
     const [boat, setBoat] = useState([]);
+    const [averageStars, setAverageStars] = useState(0);
     const pb = new Pocketbase('https://pocketbaselucashunt.fly.dev');
 
 
     async function getBoatInformation() {
         const record = await pb.collection('boatPosts').getOne(boatID);
         setBoat(record)
+
+        const filter = `ownerID = '${record.boatOwner}'`;
+        const stars = await pb.collection('review').getFullList(200 /* batch size */, {
+            sort: '-created',
+            filter: filter,
+        });
+
+        let totalStars = 0;
+        let count = 0;
+        stars.forEach(star => {
+            totalStars += star.reviewStars;
+            count++;
+        });
+       
+      setAverageStars(count > 0 ? (totalStars / count).toFixed(1) : 0.0)
+        console.log('Average Stars:', averageStars);
     }
+
+
+ 
+    
 
 
     useEffect(() => {
         getBoatInformation();
+   
     }, [])
   return (
     <View style={styles.container}>
-          {boat.length === 0 ? <LoadingScreen /> : <BoatPostCard boat={boat}/>}  
+          {boat.length === 0 ? <LoadingScreen /> : <BoatPostCard boat={boat} averageStars={averageStars}/>}  
     </View>
   );
 };
 
 
-function BoatPostCard({boat}) {
+function BoatPostCard({boat, averageStars}) {
     const navigation = useNavigation();
     const pb = new Pocketbase('https://pocketbaselucashunt.fly.dev');
     const deleteBoatPost = async () => {
         await pb.collection('boatPosts').delete(boat.id);
         navigation.navigate("Profile");
     }
-
+    const options = { month: 'short', day: 'numeric' };
+    const startDate = new Date(boat.dateStart).toLocaleDateString('da-DK', options);
+    const endDate = new Date(boat.dateEnd).toLocaleDateString('da-DK', options);
 
     return (
         <>
         <Text style={styles.title}>{boat.boatTitle}</Text>
-      <Text style={styles.title1}>4,9 ⭐️</Text>
+      <Text style={styles.title1}>{averageStars} ⭐️</Text>
 <Image source={{uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp'}}
        style={styles.Image} />
        <Text style={styles.title2}>{boat.boatTitle}</Text>
       <Text style={styles.title3}>{boat.boatPrice},-/uge</Text>
       <Text style={styles.title4}>📍{boat.boatHarbour}</Text>
+        <Text style={styles.title16}>📅{startDate} - {endDate}</Text>
       <Text style={styles.title5}>Beskrivelse</Text>
       <Text style={styles.title6}>{boat.boatDescription}</Text>
       <Text style={styles.title7}>Specifikationer</Text>
       <Text style={styles.title8}>Længde: {boat.boatLength}</Text>
-      <Text style={styles.title9}>Rum: </Text>
-      <Text style={styles.title10}>Antal bad:</Text>
+      <Text style={styles.title9}>Rum: {boat.boatRooms}</Text>
+      <Text style={styles.title10}>Antal bad: {boat.boatBaths}</Text>
       <Text style={styles.title11}>Byggeår: {boat.boatYear}</Text>
-      <Text style={styles.title12}>Gummibåd:</Text>
-      <Text style={styles.title13}>Styresystem:</Text>
-      <Text style={styles.title14}>Tv:</Text>
+      <Text style={styles.title12}>Gummibåd: {boat.boatInflatableBoat ? 'Ja' : 'Nej'}</Text>
+      <Text style={styles.title13}>Styresystem: {boat.boatControlsystem}</Text>
+      <Text style={styles.title14}>Tophastighed: {boat.boatTopSpeed}</Text>
       <Text style={styles.title15}>Model: {boat.boatBrand}</Text>
       <View style={styles.container2}>
     <Button style={styles.postDeletebutton} mode="contained" onPress={() => deleteBoatPost()}>
@@ -120,7 +145,7 @@ title3: {
     fontWeight: 'bold',
     marginBottom: 30,
     position: 'absolute',
-    top: 120,
+    top: 115,
     left: 235,
     alignSelf: 'center',
     color: '#4097ed',
@@ -129,7 +154,16 @@ title4: {
     fontSize: 15,
     marginBottom: 30,
     position: 'absolute',
-    top: 150,
+    top: 145,
+    left: 230,
+    alignSelf: 'center',
+    color: 'grey',
+},
+title16: {
+    fontSize: 15,
+    marginBottom: 30,
+    position: 'absolute',
+    top: 170,
     left: 235,
     alignSelf: 'center',
     color: 'grey',
