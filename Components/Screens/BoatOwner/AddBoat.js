@@ -73,7 +73,7 @@ const AddBoat = ({ navigation }) => {
     <KeyboardAvoidingView
     keyboardVerticalOffset={100}
     behavior="padding"
-    style={{ flex: 1, backgroundColor: "white" }}
+    style={{ flex: 1, backgroundColor: "white", padding: 10 }}
     enabled>
      <ScrollView
         contentContainerStyle={{ padding: 20, backgroundColor: "white" }}

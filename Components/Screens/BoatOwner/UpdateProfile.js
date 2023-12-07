@@ -1,166 +1,195 @@
-// importere en masse biblioteker som vi skal bruge til at lave vores profil side
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from "react-native";
+import PocketBase from "pocketbase";
+import { getID, setId } from "../../utils/AuthService.js";
+import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import LoadingScreen from "../LoadingScreen.js";
 
-import { Image, ImageBackground, Text, View, SafeAreaView, Modal, TextInput, StyleSheet } from 'react-native'
-import { Card } from 'react-native-elements'
-import PocketBase from 'pocketbase';
-import { getID, setId } from '../../utils/AuthService.js'
-import LoadingScreen from '../LoadingScreen.js'
-import { Button } from 'react-native-paper';
-import { logout } from '../../utils/AuthService.js';
-import { useNavigation } from '@react-navigation/native';
+export default function UpdateProfile() {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState({
+    id: "",
+    username: "",
+    email: "",
+    boatOwner: false,
+    postal: 0,
+    city: "",
+    address: "",
+    phone: 0,
+    firstName: "",
+    surname: "",
+  });
 
-import Style from '../../GlobalStyleSheet/Style.js'
+  const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
 
-export default function UpdateProfile () {
-        const [profile, setProfile] = useState([]);
-        const [modalVisible, setModalVisible] = useState(false);
-        const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
-          const navigation = useNavigation();
-          const [updateInfo, setUpdateInfo] = useState('');
-          const [updateType, setUpdateType] = useState('');
+  function updateProfile() {
+    pb.collection("users").update(profile.id, profile);
+    navigation.navigate("Profile");
+  }
 
+  const getUserInformation = async () => {
+    const ID = await getID();
+    const record = await pb.collection("users").getOne(ID);
+    setProfile(record);
+    setLoading(false);
+  };
 
-          const handleUpdate = (type) => {
-            setModalVisible(true);
-            setUpdateType(type);
-          };
+  useEffect(() => {
+    getUserInformation();
+  }, []);
 
-          async function handleSave () {
-            const id = await getID();
-            console.log(updateInfo, updateType, id)
-            const data = {
-                [updateType]: updateInfo,
+  return (
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={100}
+      behavior="padding"
+      style={{ flex: 1, backgroundColor: "white", padding: 10  }}
+      enabled
+    >
+      {loading ? <LoadingScreen /> : 
+      <>
+     <View style={{padding: 20}}>
+        <Text style={style.header}>Profil</Text>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Fornavn</Text>
+          <TextInput
+            style={style.input}
+            value={profile.firstName}
+            onChangeText={(firstName) =>
+              setProfile({ ...profile, firstName: firstName })
             }
-            const record = await pb.collection('users').update(id, data);
-
-            setUpdateInfo('');
-            getUserInformation();
-            setModalVisible(false);
-          };
-      
-        const getUserInformation = async () => {
-      
-         
-          const ID = await getID()
-          const record = await pb.collection('users').getOne(ID);
-          setProfile(record)
-          console.log(record)
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Efternavn</Text>
+          <TextInput
+            style={style.input}
+            value={profile.surname}
+            onChangeText={(surname) =>
+              setProfile({ ...profile, surname: surname })
+            }
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Telefon</Text>
+          <TextInput
+            style={style.input}
+            value={profile.phone.toString()}
+            onChangeText={(phone) => setProfile({ ...profile, phone: phone })}
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Adresse</Text>
+          <TextInput
+            style={style.input}
+            value={profile.address}
+            onChangeText={(address) =>
+              setProfile({ ...profile, address: address })
+            }
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Postnummer</Text>
+          <TextInput
+            style={style.input}
+            value={profile.postal.toString()}
+            onChangeText={(postal) =>
+              setProfile({ ...profile, postal: postal })
+            }
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>By</Text>
+          <TextInput
+            style={style.input}
+            value={profile.city}
+            onChangeText={(city) => setProfile({ ...profile, city: city })}
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Email</Text>
+          <TextInput
+            style={style.input}
+            value={profile.email}
+            onChangeText={(email) => setProfile({ ...profile, email: email })}
+          />
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+        >
+          <Text style={style.text}>Brugernavn</Text>
+          <TextInput
+            style={style.input}
+            value={profile.username}
+            onChangeText={(username) =>
+              setProfile({ ...profile, username: username })
+            }
+          />
+        </View>
+        <Button
+        style={{
+          borderRadius: 5,
+          backgroundColor: "#4097ed",
+          marginTop: 20,
+        
           
-      }
-       
-          
-      
-          useEffect(() => {
-            getUserInformation();
-          }, []);
-
-    return (
-        <SafeAreaView>
-                    {profile.length === 0 ? <LoadingScreen /> :
-                <>
-            <Text>Update Profile</Text>
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>Fornavn: {profile.firstName || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('firstName')}>Skift</Button>
-            </View>      
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>Efternavn: {profile.surname || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('surname')}>Skift</Button>
-            </View>  
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>Telefon: {profile.phone || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('phone')}>Skift</Button>
-            </View>
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>Email: {profile.email || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('email')}>Skift</Button>
-            </View>
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>City: {profile.city || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('city')}>Skift</Button>
-            </View>
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>Address: {profile.address || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('address')}>Skift</Button>
-            </View>
-
-            <View style={{flexDirection: 'row',  justifyContent: 'center', alignItems: 'center',}}>
-                <Text>Zip: {profile.postal || 'ikke opgivet'}</Text>
-                <Button title="Update" onPress={() => handleUpdate('postal')}>Skift</Button>
-            </View>
-
-
-
-
-                <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
+        }}
+        mode="elevated"
+        onPress={() => {
+          updateProfile();
         }}
       >
-        <View style={styles.modalView}>
-          <TextInput
-            style={styles.input}
-            value={updateInfo}
-            onChangeText={(text) => setUpdateInfo(text)}
-            placeholder="Enter new"
-          />
-
-          <Button title="Save" onPress={handleSave}>Save</Button>
-          <Button title="Cancel" onPress={() => setModalVisible(false)}>Cancel</Button>
+        <Text style={{fontSize: 20, color: "white", paddingVertical: 5}}>Opdater profil</Text>
+      
+      </Button>
+      
         </View>
-      </Modal>
-
-          
-            
-            
-         
         </>
-}
-        </SafeAreaView>
-    )
-
-
-    
+      }
+  
+    </KeyboardAvoidingView>
+  );
 }
 
-const styles = StyleSheet.create({
-    infoContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 20,
-    },
-    modalView: {
-      margin: 50,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      padding: 20,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-    input: {
-      height: 40,
-      width: '80%',
-      borderColor: 'gray',
-      borderWidth: 1,
-      marginBottom: 20,
-      paddingHorizontal: 10,
-    },
-  });
+const style = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    flex: 40,
+    fontWeight: "300",
+  },
+  header: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginLeft: -10,
+  },
+  input: {
+    borderColor: "#4097ed",
+    width: 90,
+    borderBottomWidth: 1,
+    flex: 60,
+    paddingLeft: 5,
+    height: 30,
+  },
+});
