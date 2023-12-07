@@ -69,16 +69,17 @@ const ProfilBoatOwner = ({route}) => {
                                 {profile.firstName} {profile.surname}
                             </Text>
                             <Text style={Style.textCardOwner}>
-                                {<Ionicons name="boat-outline" size={20} />} {profile.harbor || 'Ikke angivet'}
+                                {<Ionicons name="boat-outline" size={20} />} {profile.postal || 'Ikke angivet'}
                             </Text>
-                            <Text style={Style.textCardOwner}>
-                                {<Ionicons name="calendar" size={20} />} {profile.age || 'Ikke angivet'}
-                            </Text>
+            
                             <Text style={Style.textCardOwner}>
                                 {<Ionicons name="call-outline" size={20} />} {profile.phone || 'Ikke angivet'}
                             </Text>
                             <Text style={Style.textCardOwner}>
                                 {<Ionicons name="mail-outline" size={20} />} {profile.email || 'Ikke angivet'}
+                            </Text>
+                            <Text style={Style.textCardOwner}>
+                               
                             </Text>
                             <Button style={Style.profileEditbutton} mode="contained" onPress={() => navigation.navigate('Update Profile')}>
                                 Edit Profile

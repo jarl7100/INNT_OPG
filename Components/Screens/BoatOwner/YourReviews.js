@@ -1,78 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import LoadingScreen from '../LoadingScreen';
-import PocketBase from 'pocketbase';
-import { getID } from '../../utils/AuthService.js';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
+import LoadingScreen from "../LoadingScreen";
+import PocketBase from "pocketbase";
+import { getID } from "../../utils/AuthService.js";
+import { useNavigation } from "@react-navigation/native";
 
 export default function YourReviews() {
-    const navigation = useNavigation();
-    const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
-    const [reviews, setReviews] = useState([]);
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
+  const [reviews, setReviews] = useState([]);
 
-    async function fetchReviews() {
-        const id = await getID();
-        try {
-            const filter = `ownerID = '${id}'`;
-            const data = await pb.collection('review').getList(1, 10, {
-                sort: '-created',
-                filter: filter,
-            });
-            console.log(data);
-            setReviews(data.items); // Update the state with the 'items' property of the data object
-        } catch (error) {
-            console.error('Error fetching reviews:', error);
-        }
+  async function fetchReviews() {
+    const id = await getID();
+    try {
+      const filter = `ownerID = '${id}'`;
+      const data = await pb.collection("review").getList(1, 10, {
+        sort: "-created",
+        filter: filter,
+      });
+      console.log(data);
+      setReviews(data.items);
+      setLoading(false); // Update the state with the 'items' property of the data object
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      setLoading(false);
     }
+  }
 
-    useEffect(() => {
-        fetchReviews();
-    }, []);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
-    const renderItem = ({ item }) => (
-        <View style={styles.reviewContainer}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.description}>{item.reviewText}</Text>
-            <Text style={styles.rating}>Rating: {item.reviewStars}</Text>
-        </View>
-    );
+  const renderItem = ({ item }) => {
+    let color = "black";
+    if (item.reviewStars < 3) {
+      color = "red";
+    } else if (item.reviewStars < 4) {
+      color = "orange";
+    } else {
+      color = "green";
+    }
+  return (
+    <View style={{ margin: 10, backgroundColor: "#f9f9f9", borderRadius: 5, padding: 10 }}>
+      <Text style={{ margin: 10, fontSize: 25, fontWeight: "bold" }}>
+        {item.name}
+      </Text>
+    <View style={{flex: 1, flexDirection: "row", justifyContent: "center"}}>
+      <Text style={{fontSize: 20, fontWeight: "300"}}>
+        {item.reviewText}
+      </Text>
+      </View>
+      <Text
+        style={
+            {
+          color: color,
+          fontSize: 20,
+          fontWeight: "300",
+          margin: 10,
+          textAlign: "right"
+        }}
+      >
+        Rating: {item.reviewStars}
+      </Text>
+    </View>
+)};
 
-    return (
-        <View>
-            <Text>Your Reviews</Text>
-            {reviews.length === 0 ? (
-                <LoadingScreen />
-            ) : (
-                <FlatList
-                    data={reviews}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={renderItem}
-                />
-            )}
-        </View>
-    );
+  return (
+    <View style={{ backgroundColor: "white", flex: 1 }}>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <FlatList
+          data={reviews}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+        />
+      )}
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({
-    reviewContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 10,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        backgroundColor: '#f2f2f2',
-    },
-    name: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    description: {
-        fontSize: 16,
-        marginBottom: 5,
-    },
-    rating: {
-        fontSize: 14,
-        color: 'gray',
-    },
+const style = StyleSheet.create({
+  text: {
+    fontSize: 20,
+
+    fontWeight: "300",
+  },
+  header: {
+    fontSize: 25,
+    fontWeight: "bold",
+  },
 });

@@ -7,8 +7,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 
 import Style from "../../GlobalStyleSheet/Style.js";
+import LoadingScreen from "../LoadingScreen.js";
 
 const UpdateBoatPost = ({ route }) => {
+  const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
   const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
   const [boat, setBoat] = useState({
@@ -41,9 +43,10 @@ const UpdateBoatPost = ({ route }) => {
       setBoat(data);
       setDateStart(new Date(data.dateStart));
       setDateEnd(new Date(data.dateEnd));
-
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
+  
     }
   }
 
@@ -72,8 +75,9 @@ const UpdateBoatPost = ({ route }) => {
     <KeyboardAvoidingView
     keyboardVerticalOffset={100}
     behavior="padding"
-    style={{ flex: 1, backgroundColor: "white" }}
+    style={{ flex: 1, backgroundColor: "white", padding: 10 }}
     enabled>
+      {loading ? <LoadingScreen /> : 
      <ScrollView
         contentContainerStyle={{ padding: 20, backgroundColor: "white" }}
         keyboardShouldPersistTaps="handled"
@@ -325,6 +329,7 @@ const UpdateBoatPost = ({ route }) => {
       </Button>
 
     </ScrollView>
+}
     </KeyboardAvoidingView>
   );
 };
