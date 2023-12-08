@@ -1,29 +1,24 @@
 import * as React from "react";
-import { Text, FlatList, Alert, SafeAreaView, View } from "react-native";
+import { Text, FlatList, Alert, SafeAreaView, View, StyleSheet } from "react-native";
 import { Button, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../../../FirebaseConfig';
-
+import Pocketbase from 'pocketbase';
 import Style from '../../GlobalStyleSheet/Style.js';
 
-// Her importerer vi alle bådene fra firestore databasen
+
 function BoatsScreen() {
     const navigation = useNavigation();
     const fetchBoats = async () => {
 
-        // Her henter vi alle bådene fra firestore databasen
-        await getDocs(collection(db, "boats"))
-            .then((querySnapshot) => {
-                const newData = querySnapshot.docs
-                    .map((doc) => ({ ...doc.data(), id: doc.id }));
-                setBoats(newData);
-            })
+        const pb = new Pocketbase('https://pocketbaselucashunt.fly.dev');
+        const data = await pb.collection('boatPosts').getList(1, 10, {
+            sort: 'created',
+        });
+        setBoats(data.items);
 
     }
-    // Her laver vi en useState som vi bruger til at gemme alle bådene i
+
     const [boats, setBoats] = useState([]);
     useEffect(() => {
         fetchBoats();
@@ -32,21 +27,16 @@ function BoatsScreen() {
 
     let BoatCards = ({ item }) => {
         return (
-            // Her Laver vi et kort til hver båd i databasen fra firestore
-            <Card style={Style.boatCard} onPress={() => navigation.navigate("Boat Post Renter")}>
 
-                {/* Her viser vi informationen som hentes fra Firebase i et "Card" */}
-                <Card.Title title={item.boatTitle} />
-                <Card.Cover style={Style.boatCardImage} source={{ uri: item.boatImage }} />
+            <Card style={Style.boatCard} onPress={() => navigation.navigate("Boat Post Renter", { boatID: item.id })}>
+
+        
+                <Card.Title  title={item.boatTitle}/>
+                <Card.Cover style={Style.boatCardImage} source={{ uri: "https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp" }} />
                 <Card.Content>
-                    <Text style={Style.boatCardText}>Price: {item.boatPrice} kr./Day</Text>
+                    <Text style={Style.boatCardText}>Pris: {item.boatPrice} kr./Dag</Text>
 
-                       {/* Her gives der lidt mere information om båden fra firebase*/}
-                    <Button mode="contained" buttonColor="#4f4bfa" onPress={() => 
-                        Alert.alert(
-                    'Name of boat:' + item.boatTitle + '\n' + "Price: " + item.boatPrice + " kr. per day " + '\n' + " Brand: " + item.boatBrand + '\n' + " Top Speed: " + item.boatTopSpeed + "km/h" + '\n' + "Model Year: " + item.boatYear )}> 
-                        Learn more 
-                        </Button>
+            
                 </Card.Content>
             </Card>
         )
@@ -65,5 +55,26 @@ function BoatsScreen() {
         </View>
     );
 }
+
+const style = StyleSheet.create({
+    text: {
+      fontSize: 20,
+      flex: 40,
+      fontWeight: "300",
+    },
+    header: {
+      fontSize: 25,
+      fontWeight: "bold",
+      
+    },
+    input: {
+      borderColor: "#4097ed",
+      width: 90,
+      borderBottomWidth: 1,
+      flex: 60,
+      paddingLeft: 5,
+      height: 30,
+    },
+  });
 
 export default BoatsScreen

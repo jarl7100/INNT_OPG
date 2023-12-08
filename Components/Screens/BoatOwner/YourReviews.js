@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import PocketBase from "pocketbase";
-import { getID } from "../../utils/AuthService.js";
+
 import { useNavigation } from "@react-navigation/native";
 
-export default function YourReviews() {
+export default function YourReviews({route}) {
+  const { ownerID } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
   const [reviews, setReviews] = useState([]);
 
   async function fetchReviews() {
-    const id = await getID();
+
     try {
-      const filter = `ownerID = '${id}'`;
+      const filter = `ownerID = '${ownerID}'`;
       const data = await pb.collection("review").getList(1, 10, {
         sort: "-created",
         filter: filter,

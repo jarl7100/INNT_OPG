@@ -8,35 +8,36 @@ import LoadingScreen from "../LoadingScreen.js";
 import { Button } from "react-native-paper";
 
 const YourReservation = () => {
-  const [loading, setLoading] = useState(true); // Create a new state variable called 'loading' and initialize it to true
-  const [reservations, setReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
-  const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
-
   const navigation = useNavigation();
-
-  function navigateToCommunication(renterID, ownerID) {
-    navigation.navigate("Communication", { renter: renterID, owner: ownerID });
-  }
+  const [loading, setLoading] = useState(true); // Create a new state variable called 'loading' and initialize it to true
+  const [oldReservations, setOldReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
+  const [futureReservations, setFutureReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
 
   async function getReservations() {
+    const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
     const id = await getID();
     const filter = `owner = '${id}'`;
+
     const data = await pb.collection("reservations").getList(1, 10, {
       sort: "startDate",
       filter: filter,
     });
-    if (data.items.length === 0) {
-      setReservations([
-        {
-          id: "1",
-          renterName: "No reservations yet",
-          startDate: "",
-          endDate: "",
-        },
-      ]);
+ 
+    if (data.items.length > 0) {
+      const today = new Date();
+      const futureReservations = data.items.filter(
+        (item) => new Date(item.endDate) > today
+      );
+      const oldReservations = data.items.filter(
+        (item) => new Date(item.endDate) < today
+      );
+
+      setFutureReservations(futureReservations);
+      setOldReservations(oldReservations);
+
+
       setLoading(false);
     } else {
-      setReservations(data.items);
       setLoading(false);
     }
   }
@@ -45,77 +46,263 @@ const YourReservation = () => {
     getReservations();
   }, []);
 
-  const renderItem = ({ item }) => {
+  function navigateToCommunication(renterID, ownerID) {
+    navigation.navigate("Communication", { renter: renterID, owner: ownerID });
+  }
+
+  const renderFutureReservations = ({ item }) => {
+ 
     const endDate = new Date(item.endDate);
     const startDate = new Date(item.startDate);
     const options = { month: "short", day: "numeric", year: "numeric" };
     const endDateString = endDate.toLocaleDateString("da-DK", options);
     const startDateString = startDate.toLocaleDateString("da-DK", options);
-
+  
+  
     return (
       <View style={{ padding: 10 }}>
-        <Card style={{backgroundColor: "#f9f9f9"}}>
+        <Card style={{ backgroundColor: "#f9f9f9", paddingHorizontal: 20 }}>
           <Card.Content>
-            <View>
-              <Text style={style.header}>{item.renterName}</Text>
+          <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+              <Text
+                style={{ fontSize: 25, fontWeight: "bold", marginBottom: 10, marginLeft: -10 }}
+              >
+                {item.boatName}
+              </Text>
+              <Text
+                style={{ fontSize: 25, fontWeight: "bold", marginBottom: 10, color: "orange", marginRight: -10 }}
+              >
+                {item.amount} kr.
+              </Text>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10, color: "green" }}>
-              <Text style={{color: "green",  fontSize: 20, fontWeight: "300" }}>Afhentning: </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 10,
+                color: "green",
+              }}
+            >
+              <Text style={{ color: "green", fontSize: 20, fontWeight: "300" }}>
+                Afhentning:{" "}
+              </Text>
               <Text style={style.text}>{startDateString}</Text>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
-              <Text style={{color: "red",  fontSize: 20, fontWeight: "300" }}>Aflevering: </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ color: "red", fontSize: 20, fontWeight: "300" }}>
+                Aflevering:{" "}
+              </Text>
               <Text style={style.text}>{endDateString}</Text>
             </View>
           </Card.Content>
-       
-            <View style={{flexDirection: "row", justifyContent: "center"}}>
+  
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Button
               style={{
                 borderRadius: 5,
                 backgroundColor: "#4097ed",
                 margin: 20,
                 paddingHorizontal: 50,
-                
               }}
               mode="elevated"
               onPress={() => navigateToCommunication(item.renter, item.owner)}
             >
-              <Text
-                style={{ fontSize: 14, color: "white", paddingVertical: 1 }}
-              >
-                Kontakt Lejeren
+              <Text style={{ fontSize: 14, color: "white", paddingVertical: 1 }}>
+                Kontakt
               </Text>
             </Button>
+          </View>
+        </Card>
+      </View>
+    );
+  };
+  
+  const renderOldReservations = ({ item }) => {
+    
+    const endDate = new Date(item.endDate);
+    const startDate = new Date(item.startDate);
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    const endDateString = endDate.toLocaleDateString("da-DK", options);
+    const startDateString = startDate.toLocaleDateString("da-DK", options);
+  
+  
+  
+    return (
+      <View style={{ padding: 10 }}>
+        <Card style={{ backgroundColor: "#f9f9f9", paddingHorizontal: 20 }}>
+          <Card.Content>
+          <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+              <Text
+                style={{ fontSize: 25, fontWeight: "bold", marginBottom: 10, marginLeft: -10 }}
+              >
+                {item.boatName}
+              </Text>
+              <Text
+                style={{ fontSize: 25, fontWeight: "bold", marginBottom: 10, color: "orange", marginRight: -10 }}
+              >
+                {item.amount} kr.
+              </Text>
             </View>
-          
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 10,
+                color: "green",
+              }}
+            >
+              <Text style={{ color: "green", fontSize: 20, fontWeight: "300" }}>
+                Afhentning:{" "}
+              </Text>
+              <Text style={style.text}>{startDateString}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ color: "red", fontSize: 20, fontWeight: "300" }}>
+                Aflevering:{" "}
+              </Text>
+              <Text style={style.text}>{endDateString}</Text>
+            </View>
+          </Card.Content>
+  
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Button
+              style={{
+                borderRadius: 5,
+                backgroundColor: "#4097ed",
+                margin: 20,
+                paddingHorizontal: 50,
+              }}
+              mode="elevated"
+              onPress={() => navigateToCommunication(item.renter, item.owner)}
+            >
+              <Text style={{ fontSize: 14, color: "white", paddingVertical: 1 }}>
+                Kontakt
+              </Text>
+            </Button>
+          </View>
         </Card>
       </View>
     );
   };
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <ScrollView style={{ backgroundColor: "white", flex: 1, padding: 20 }}>
       {loading ? (
         <LoadingScreen />
       ) : (
-        <FlatList
-          data={reservations}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-        />
+        <>
+          {futureReservations.length === 0 && oldReservations.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={style.text}>
+                Du har ingen reservationer
+              </Text>
+            </View>
+          ) : (
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={style.header}>Reservationer </Text>
+                {futureReservations.length === 0 && (
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={style.text}>
+                        Du har ingen fremtidige reservationer
+                      </Text>
+                    </View>
+                  )}
+                {futureReservations.length > 0 &&(
+                    <>
+                      <FlatList
+                        data={futureReservations}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={renderFutureReservations}
+                      />
+                    </>
+                  )}
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 20,
+                  marginBottom: 50
+                  
+                }}
+              >
+                <Text style={style.header}>Tidligere reservationer </Text>
+                {oldReservations.length === 0 &&(
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={style.text}>
+                        Du har ingen tidligere reservationer
+                      </Text>
+                    </View>
+                  )}
+                {oldReservations.length > 0 &&(
+                    <>
+                      <FlatList
+                        data={oldReservations}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={renderOldReservations}
+                      />
+                    </>
+                  )}
+              </View>
+            </>
+          )}
+        </>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
+
+
 const style = StyleSheet.create({
+
   text: {
-    fontSize: 20, fontWeight: "300",
+    fontSize: 20,
+    fontWeight: "300",
   },
   header: {
     fontSize: 25,
     fontWeight: "bold",
+    marginBottom: 10
   },
 });
+
 export default YourReservation;

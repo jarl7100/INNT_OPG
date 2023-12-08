@@ -113,7 +113,7 @@ const ProfilBoatOwner = ({route}) => {
                                         </Text>
                                                  </Card.Content>
                                              </Card>
-                                             <Button style={Style.postEditbutton} mode="contained" onPress={() => navigation.navigate('Your Reviews')}>
+                                             <Button style={Style.postEditbutton} mode="contained" onPress={() => navigation.navigate('Your Reviews', {ownerID: boat.boatOwner})}>
                                                  {<Text style={{color: "black"}}>Reviews</Text>}
                                              </Button>
                                          </Card.Content>
