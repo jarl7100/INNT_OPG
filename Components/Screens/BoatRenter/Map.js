@@ -22,9 +22,9 @@ function Map() {
                                 latitudeDelta: 0.0922,
                                 longitudeDelta: 0.0421,
                         }}>
-                        {/* Her laver vi en markører som viser en båd i tuborg Havn*/}
+                        {/* Her laver vi en markører som viser en båd i */}
                         <Marker
-                            coordinate={{ latitude: 55.726531, longitude: 12.587744 }}
+                            coordinate={{ latitude: 56.127418, longitude: 12.308571 }}
                             title={"My Marker"}
                         >
                            { /* Her laver vi en callout som viser information om båden når brugeren trykker på markeren*/}

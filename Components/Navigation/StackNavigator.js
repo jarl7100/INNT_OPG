@@ -15,6 +15,9 @@ import Communication from '../Screens/General/Communication.js';
 import Insurance from '../Screens/BoatOwner/Insurence.js';
 import UpdateBoatPost from '../Screens/BoatOwner/UpdateBoatPost.js';
 import UpdateProfile from '../Screens/BoatOwner/UpdateProfile.js';
+import BoatPostRenter from '../Screens/BoatRenter/BoatPostRenter.js';
+import Payment from '../Screens/BoatRenter/Payment.js';
+import CreateReview from '../Screens/BoatRenter/CreateReview.js';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +53,10 @@ function StackNavigator() {
         component={BoatPost}
       />
       <Stack.Screen
+        name="Boat Post Renter"
+        component={BoatPostRenter}
+      />
+      <Stack.Screen
         name="Your Reviews"
         component={YourReviews}
       />
@@ -68,6 +75,14 @@ function StackNavigator() {
       <Stack.Screen
         name="Update Profile"
         component={UpdateProfile}
+      />
+      <Stack.Screen
+        name="Payment"
+        component={Payment}
+      />
+      <Stack.Screen
+        name="Create Review"
+        component={CreateReview}
       />
     </Stack.Navigator>
   );

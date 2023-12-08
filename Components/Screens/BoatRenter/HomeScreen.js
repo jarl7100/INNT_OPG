@@ -13,7 +13,7 @@ function HomeScreen() {
     <View style={Style.homeViewer}>
       <View style={Style.homeViewer2}>
         <Text style={Style.homeText}>
-          Welcome to Nautical Rentals
+          Welcome to B O A T
         </Text>
         <Text style={Style.homeText2}>
           Book a boat or loan out your boat today!
@@ -30,12 +30,11 @@ function HomeScreen() {
       </View>
       <View style={Style.homeViewerButton}>
 
-        {/* En knap som i fremtiden vil tage brugeren til side hvor de kan bestille en båd
-        men som her bare giver en alert om at dette er en demo app*/}
+
         <Button
           style={Style.homeButton}
           mode="contained"
-          onPress={() => Alert.alert('This is a demo app  \n  \n In the full version you will be able to book a boat :)')}>
+          onPress={() => navigation.navigate("Boats")}>
           Book a Boat
         </Button>
         {/* Tager brugeren til "Map" siden */}

@@ -33,7 +33,7 @@ function BoatsScreen() {
     let BoatCards = ({ item }) => {
         return (
             // Her Laver vi et kort til hver båd i databasen fra firestore
-            <Card style={Style.boatCard} onPress={() => navigation.navigate("Boat Post")}>
+            <Card style={Style.boatCard} onPress={() => navigation.navigate("Boat Post Renter")}>
 
                 {/* Her viser vi informationen som hentes fra Firebase i et "Card" */}
                 <Card.Title title={item.boatTitle} />
