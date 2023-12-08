@@ -32,7 +32,6 @@ const BoatPost = ({ route }) => {
     });
 
     setAverageStars(count > 0 ? (totalStars / count).toFixed(1) : 0.0);
-    console.log("Average Stars:", averageStars);
     setLoading(false);
   }
 

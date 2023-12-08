@@ -1,4 +1,4 @@
-import { SafeAreaView, TextInput, Button, Text } from "react-native";
+import { SafeAreaView, TextInput, Button, Text, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import Slider from '@react-native-community/slider';
 import PocketBase from 'pocketbase';
@@ -7,12 +7,12 @@ import { useNavigation } from "@react-navigation/native";
 
 
 
-export default function CreateReview() {
+export default function CreateReview({ route }) {
     const navigation = useNavigation();
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
     const [reviewText, setReviewText] = useState("");
     const [rating, setRating] = useState(3); // Default rating is 3
-
+    const { owner } = route.params;
     async function handleReviewSubmit () {
         const id = await getID();
         const boatOwner = await pb.collection('users').getOne(id);
@@ -20,7 +20,7 @@ export default function CreateReview() {
         //OBS ownerID skal laves om fra HARDCODED
         const data = {
             "name": boatOwner.firstName + " " + boatOwner.surname,
-            "ownerID": "viyj33oq7d5dqj1",
+            "ownerID": owner,
             "reviewText": reviewText,
             "reviewStars": rating,
         };
@@ -30,13 +30,14 @@ export default function CreateReview() {
     };
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{padding: 10, flex: 1, backgroundColor: "white"}}>
+            <View style={{margin: 20}}>
             <TextInput
-                placeholder="Write your review"
+                placeholder="Skriv anmeldelse"
                 value={reviewText}
                 onChangeText={(text) => setReviewText(text)}
                 multiline
-                style={{ height: 200, padding: 10, backgroundColor: "#fff" }}
+                style={{ height: 200, backgroundColor: "#fff", borderRadius: 5, paddingLeft: 5, borderColor: "#4097ed", borderWidth: 1 }}
             />
 
             <Slider
@@ -46,9 +47,22 @@ export default function CreateReview() {
                 value={rating}
                 onValueChange={(value) => setRating(value)}
             />
-            <Text>Rating: {rating}</Text>
+            <Text style={style.text}>Rating: {rating} ⭐️</Text>
 
-            <Button title="Submit" onPress={handleReviewSubmit} />
+            <Button title="Anmeld" onPress={handleReviewSubmit} />
+            </View>
         </SafeAreaView>
     );
 }
+const style = StyleSheet.create({
+    text: {
+      fontSize: 20,
+    
+      fontWeight: "300",
+    },
+    header: {
+      fontSize: 25,
+      fontWeight: "bold",
+    },
+  });
+  
