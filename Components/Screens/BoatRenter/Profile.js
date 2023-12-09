@@ -33,7 +33,7 @@ export default function Profile({ route }) {
     await logout();
     navigation.reset({
       index: 0,
-      routes: [{ name: "Opret profil" }],
+      routes: [{ name: "Welcome" }],
     });
   }
 
