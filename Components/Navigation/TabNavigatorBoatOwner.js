@@ -8,11 +8,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddBoat from "../Screens/BoatOwner/AddBoat.js";
 import YourReservation from '../Screens/BoatOwner/YourResevation.js';
 import ProfilBoatOwner from '../Screens/BoatOwner/ProfilBoatOwner.js';
+import ChatPage from '../Screens/General/Chatbot/ChatbotPage.js';
 
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigatorBoatOwner() {
+    
     return (
       <Tab.Navigator  screenOptions={({ route }) => ({
         tabBarActiveTintColor: "blue",
@@ -25,9 +27,9 @@ export default function TabNavigatorBoatOwner() {
         ],
         // Her laver vi ikonerne til de forskellige sider i appen
         tabBarIcon: ({ color, size }) => {
-          if (route.name === 'Home') {
+          if (route.name === 'ChatBot') {
             return (<Ionicons
-              name="home-outline"
+              name="help-circle-outline"
               size={size}
               color={color}
             />
@@ -64,16 +66,10 @@ export default function TabNavigatorBoatOwner() {
       })}
       // Her laver vi de forskellige sider i appen
       >
-        <Tab.Screen name="Profile"  component={ProfilBoatOwner}
-         options={{
-          headerRight: () => (<Button
-              onPress={() => alert('This is a button!')}
-              title="Help"
-            />
-          ),
-        }}/>
+        <Tab.Screen name="Profile"  component={ProfilBoatOwner}/>
         <Tab.Screen name="Add Boat" component={AddBoat} />
         <Tab.Screen name="Your Reservations" component={YourReservation} />
+        <Tab.Screen name="ChatBot" component={ChatPage} />
       </Tab.Navigator>
     )
   }

@@ -13,6 +13,7 @@ import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
 import Communication from '../Screens/General/Communication.js';
 import Resevations from '../Screens/BoatRenter/Resevations.js';
+import ChatPage from '../Screens/General/Chatbot/ChatbotPage.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -74,6 +75,14 @@ function TabNavigator() {
               />
             );
           }
+          if (route.name === 'ChatBot') {
+            return (<Ionicons
+              name="help-circle-outline"
+              size={size}
+              color={color}
+            />
+            );
+          }
         },
       })}
 
@@ -85,6 +94,7 @@ function TabNavigator() {
         <Tab.Screen name="Resevations" component={Resevations} />
         <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="ChatBot" component={ChatPage} />
       </Tab.Navigator>
     )
   }
