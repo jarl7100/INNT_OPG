@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddBoat from "../Screens/BoatOwner/AddBoat.js";
 import YourReservation from '../Screens/BoatOwner/YourResevation.js';
 import ProfilBoatOwner from '../Screens/BoatOwner/ProfilBoatOwner.js';
-import ChatPage from '../Screens/General/Chatbot/ChatbotPage.js';
+import ChatPage from '../Screens/General/ChatbotPage.js';
 
 
 const Tab = createBottomTabNavigator();

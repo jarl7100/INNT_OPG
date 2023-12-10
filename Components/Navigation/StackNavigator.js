@@ -18,7 +18,7 @@ import UpdateProfile from '../Screens/BoatOwner/UpdateProfile.js';
 import BoatPostRenter from '../Screens/BoatRenter/BoatPostRenter.js';
 import Payment from '../Screens/BoatRenter/Payment.js';
 import CreateReview from '../Screens/BoatRenter/CreateReview.js';
-import ChatPage from '../Screens/General/Chatbot/ChatbotPage.js';
+import ChatPage from '../Screens/General/ChatbotPage.js';
 
 const Stack = createStackNavigator();
 

@@ -4,16 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Henter alle siderne der skal bruges i bunden af appen
-import CreateUser from '../Screens/Authentication/CreateUser.js';
-import Login from '../Screens/Authentication/Login.js';
 import BoatsScreen from "../Screens/BoatRenter/BoatsScreen.js";
-import AddBoat from "../Screens/BoatOwner/AddBoat.js";
 import Profile from "../Screens/BoatRenter/Profile.js";
 import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
-import Communication from '../Screens/General/Communication.js';
 import Resevations from '../Screens/BoatRenter/Resevations.js';
-import ChatPage from '../Screens/General/Chatbot/ChatbotPage.js';
+import ChatPage from '../Screens/General/ChatbotPage.js';
 
 const Tab = createBottomTabNavigator();
 

@@ -51,7 +51,7 @@ const ChatPage = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#ffff" }}>
       <FlatList
         data={messages}
         keyExtractor={(item, index) => index.toString()}
@@ -73,7 +73,7 @@ const ChatPage = () => {
             {loadingState ? <ActivityIndicator size="large" color="#0000ff" /> : null}
       <KeyboardAvoidingView style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TextInput
-          style={{ flex: 1, borderWidth: 1, borderRadius: 8, padding: 8 }}
+          style={{ flex: 1, borderWidth: 1, borderRadius: 8, padding: 8, marginLeft: 8}}
           value={inputMessage}
           onChangeText={(text) => setInputMessage(text)}
           placeholder="Type your message..."
