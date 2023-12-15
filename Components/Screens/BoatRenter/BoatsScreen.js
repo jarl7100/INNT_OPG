@@ -5,6 +5,7 @@ import {
     SafeAreaView,
     View,
     StyleSheet,
+    RefreshControl
   } from "react-native";
   import { Button, Card } from "react-native-paper";
   import { useState, useEffect } from "react";
@@ -20,6 +21,7 @@ import {
     const [errorSearching, setErrorSearching] = useState("");
     const [boats, setBoats] = useState([]);
     const navigation = useNavigation();
+    const [refreshing, setRefreshing] = useState(true);
     
     useEffect(() => {
       
@@ -29,6 +31,7 @@ import {
     const fetchBoats = async () => {
     setBoats([]);
     setErrorSearching("");
+    setRefreshing(false);
       const pb = new Pocketbase("https://pocketbaselucashunt.fly.dev");
       try {
         if (filter !== "") {
@@ -101,6 +104,9 @@ import {
           data={boats}
           renderItem={BoatCards}
           keyExtractor={(item) => item.id}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={fetchBoats} />
+          }
         />
         </>
         )}
