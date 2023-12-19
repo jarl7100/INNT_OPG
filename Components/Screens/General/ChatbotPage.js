@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, FlatList, Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 
+
+//Denne skærm viser en chat, hvor brugeren kan skrive med en chatbot
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [loadingState, setLoadingState] = useState(false);
 
-
+  //Sender en besked til chatbotten
   const sendMessage = async () => {
     if (inputMessage.trim() === '') return;
     setLoadingState(true);
@@ -39,8 +41,10 @@ const ChatPage = () => {
       const response = await axios.request(options);
       console.log('Full API Response:', response.data.result);
 
+      //Hvis der ikke er nogen bot response så viser den en fejlbesked
       const botReply = response.data.result || 'Bot response not available';
 
+      //Tilføjer brugerens besked og bot beskeden til messages arrayet
       setMessages([...messages, { role: 'user', content: inputMessage }, { role: 'bot', content: botReply }]);
       setInputMessage('');
       setLoadingState(false);

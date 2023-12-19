@@ -10,9 +10,12 @@ import Style from "../../GlobalStyleSheet/Style.js";
 import LoadingScreen from "../LoadingScreen.js";
 
 const UpdateBoatPost = ({ route }) => {
+
   const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
   const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
+
+  
   const [boat, setBoat] = useState({
     boatTitle: "",
     boatBrand: "",
@@ -33,9 +36,12 @@ const UpdateBoatPost = ({ route }) => {
     boatInflatableBoat: "",
     boatControlsystem: "",
   });
+
+  //Henter id fra det opslag der er trykket på fra route
   const { boatID } = route.params;
 
 
+//Henter opslaget fra pocketbase databasen og sætter det i state
   async function getBoatInformation() {
     const filter = `id = '${boatID}'`;
     try {
@@ -50,12 +56,15 @@ const UpdateBoatPost = ({ route }) => {
     }
   }
 
+  //Opdaterer opslaget i pocketbase databasen når brugeren klikker på knappen
     async function updateBoatPost() {
         const record = await pb.collection('boatPosts').update(boatID, boat);
 
         navigation.navigate("Profile");
     }
 
+
+    //Disse tre funktioner bruger til at opdatere dato når brugeren ændre dem
     const [dateStart, setDateStart] = useState(new Date());
     const [dateEnd, setDateEnd] = useState(new Date());
   

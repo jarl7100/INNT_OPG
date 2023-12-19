@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { Button } from "react-native-paper";
 
+// Denne skærm er til forsikringssiden for bådejere 
 export default function Insurance() {
         return (
                 <View style={styles.container}>

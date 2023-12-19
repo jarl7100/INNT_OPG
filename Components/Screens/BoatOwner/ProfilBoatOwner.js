@@ -10,25 +10,32 @@ import PocketBase from 'pocketbase';
 import { getID, setId, logout } from '../../utils/AuthService.js'
 
 
+//Denne skærm er til at boat owner kan se sin profil
 const ProfilBoatOwner = ({route}) => {
+
 
     const navigation = useNavigation();
     const [profile, setProfile] = useState([]);
     const [boat, setBoat] = useState([]);
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
 
+    //logger brugeren ud ved at slette token og id fra asyncstorage og navigere tilbage til welcome siden
     async function loguserout() {
         await logout();
         navigation.reset({
             index: 0,
             routes: [{name: 'Welcome'}],
           })}
+
+
+    //Henter brugerens informationer fra pocketbase databasen
     const getUserInformation = async () => {
         const ID = await getID()
         const record = await pb.collection('users').getOne(ID);
         setProfile(record)
     }
 
+    //Henter brugerens båd fra pocketbase databasen
     async function getBoatInformation() {
          const ID = await getID()
          const filter = `boatOwner = '${ID}'`;
@@ -42,6 +49,7 @@ const ProfilBoatOwner = ({route}) => {
  
        }
  
+       //Navigere til opslaget for båden hvis brugeren har en båd ellers navigere den til opret båd siden
        function navigateToBoatPost(boatID) {
  
          if(boatID === undefined) {
@@ -52,6 +60,7 @@ const ProfilBoatOwner = ({route}) => {
        }
  
  
+       //Henter brugerens informationer og båd når siden bliver loadet
      useEffect(() => {
          getUserInformation();
          getBoatInformation();

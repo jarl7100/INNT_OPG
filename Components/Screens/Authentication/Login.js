@@ -31,6 +31,7 @@ export default function Login({}) {
         password
       );
 
+      //Hvis brugeren er logget ind gemmes token og brugerens id i asyncstorage
       if (authData) {
         storeToken({userToken: pb.authStore.token, userID: pb.authStore.model.id, boatOwner: pb.authStore.model.boatOwner.toString()});
 

@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import Style from '../../GlobalStyleSheet/Style';
 
+
+//Dette er startskærmen for appen
 const StartScreen = () => {
     const navigation = useNavigation();
     

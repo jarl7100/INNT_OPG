@@ -13,9 +13,12 @@ import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from "../LoadingScreen.js";
 
+
+//Denne skærm er til at brugeren kan opdatere sin profil
 export default function UpdateProfile() {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
+
   const [profile, setProfile] = useState({
     id: "",
     username: "",
@@ -31,11 +34,14 @@ export default function UpdateProfile() {
 
   const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
 
+  //Opdatere brugerens profil i pocketbase databasen når brugeren klikker på opdater profil knappen
   function updateProfile() {
     pb.collection("users").update(profile.id, profile);
     navigation.navigate("Profile");
   }
 
+
+  //Henter brugerens informationer fra pocketbase databasen
   const getUserInformation = async () => {
     const ID = await getID();
     const record = await pb.collection("users").getOne(ID);

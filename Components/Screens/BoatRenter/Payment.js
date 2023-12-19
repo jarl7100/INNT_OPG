@@ -8,6 +8,8 @@ import PocketBase from "pocketbase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import LoadingScreen from "../LoadingScreen.js";
 
+
+//Denne skærm er til at brugeren kan betale for en båd, dog er betalingsservice ikke sat op
 const Payment = ({ route }) => {
   const [loading, setLoading] = useState(false); // Create a new state variable called 'loading' and initialize it to true
   const { boatID } = route.params;
@@ -26,6 +28,7 @@ const Payment = ({ route }) => {
     setBoat(record);
   }
 
+//når brugeren klikker på betal knappen oprettes der en reservation i pocketbase databasen
 async function makeReservation() {
     setLoading(true);
     const id = await getID();

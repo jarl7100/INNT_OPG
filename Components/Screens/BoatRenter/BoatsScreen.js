@@ -14,8 +14,10 @@ import {
   import Style from "../../GlobalStyleSheet/Style.js"
   import LoadingScreen from "../LoadingScreen.js";
   
-  
+  //Denne skærm er til at brugeren kan se alle opslagene for både
   const BoatsScreen = ({ route }) => {
+
+    //Henter filter og datoer fra route
     const { filter, dateStart, dateEnd } = route.params || { filter: "", dateStart: "", dateEnd: "" };
     const [searching, setSearching] = useState(true);
     const [errorSearching, setErrorSearching] = useState("");
@@ -23,17 +25,21 @@ import {
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(true);
     
+  
     useEffect(() => {
       
       fetchBoats();
     }, [route]);
   
+    //Henter alle opslagene for både fra pocketbase databasen
     const fetchBoats = async () => {
     setBoats([]);
     setErrorSearching("");
     setRefreshing(false);
       const pb = new Pocketbase("https://pocketbaselucashunt.fly.dev");
       try {
+
+        //Hvis der er et filter og datoer så henter den opslagene der matcher filteret og datoerne
         if (filter !== "") {
        
           const resultList = await pb.collection("boatPosts").getList(1, 10, {
@@ -52,6 +58,8 @@ import {
             return startDate >= resultDateStart && endDate <= resultDateEnd;
           });
           console.log(filteredPosts);
+
+          //Hvis der ikke er nogen både der matcher filteret og datoerne så viser den en fejlbesked
           if (filteredPosts.length === 0) {
             setErrorSearching("Der er ingen både der matcher din søgning!");
         
@@ -59,7 +67,9 @@ import {
                 setBoats(filteredPosts);
             }
           setSearching(false);
-        } else {
+        } 
+        //Hvis der ikke er et filter og datoer så henter den alle opslagene for både
+        else {
             const resultList = await pb.collection("boatPosts").getList(1, 10, {
                 sort: "-created",
             })

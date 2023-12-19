@@ -4,16 +4,13 @@ import { Button, FAB } from "react-native-paper";
 import PocketBase from "pocketbase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-
-
-// ...
-
-
-
 import { getID } from "../../utils/AuthService.js";
 
+
+//denne skærm er til at brugeren kan oprette et opslag på en båd
 const AddBoat = ({ navigation }) => {
 
+  //Her sætter vi alle de forskellige states som vi skal bruge til at oprette et opslag
   const [boat, setBoat] = useState({
     boatTitle: "",
     boatBrand: "",
@@ -35,8 +32,7 @@ const AddBoat = ({ navigation }) => {
     boatControlsystem: "",
   });
 
-  
-
+  //disse tre funktioner bruges til at gemme datoen som brugeren vælger
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
 
@@ -49,6 +45,7 @@ const AddBoat = ({ navigation }) => {
     setDateEnd(currentDate);
   }
 
+  //Denne funktion bruger vi til at oprette et opslag på en båd i pocketbase
   async function addBoatToPocketbase() {
     const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
     const id = await getID();

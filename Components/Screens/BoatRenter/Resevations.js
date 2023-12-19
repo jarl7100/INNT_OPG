@@ -7,6 +7,8 @@ import PocketBase from "pocketbase";
 import LoadingScreen from "../LoadingScreen.js";
 import { Button } from "react-native-paper";
 
+
+//Denne skærm er til at brugeren kan se sine reservationer
 const Resevations = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); // Create a new state variable called 'loading' and initialize it to true
@@ -25,6 +27,7 @@ const Resevations = () => {
       filter: filter,
     });
 
+    //Hvis der er reservationer så sorteres de i fremtidige og gamle reservationer
     if (data.items.length > 0) {
       const today = new Date();
       const futureReservations = data.items.filter(

@@ -9,6 +9,8 @@ import PocketBase from 'pocketbase';
 
 const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
 
+
+//Denne skærm er til at brugeren kan søge efter både
 export default function SearchScreen() {
     const navigation = useNavigation();
     //disse states bruges til at gemme den data brugeren indtaster
@@ -19,11 +21,7 @@ export default function SearchScreen() {
     const [dateStart, setDateStart] = useState(new Date());
     const [dateEnd, setDateEnd] = useState(new Date());
 
-  //denne funktion bruges til at nulstille søgningen
-  function resetSearch() {
-    setSearchResult([]);
-    setErrorSearching('');
-  }
+
 
   //Denne funktion bruges til at sætte startdatoen
   const onChangeStart = (event, selectedDate) => {
@@ -38,6 +36,8 @@ export default function SearchScreen() {
   };
 
 
+
+  //istedet for at denne side søger efter både, så bliver parametrene sendt til BoatsScreen.js hvor den så søger efter både
   async function search() {
     const filter = `typeOfBoat = '${typeOfBoat}' && boatHarbour = '${harbour}' && boatPrice <= '${maxPrice}'`;
     const formattedStartDate = dateStart.toISOString();

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Pocketbase from 'pocketbase';
 import Style from '../../GlobalStyleSheet/Style.js';
 
+//viser de både i den havn som brugeren har valgt fra map skærmen
 const MapBoatScreen = ({ route }) => {
     const { harborName } = route.params;
     const [boats, setBoats] = useState([]);

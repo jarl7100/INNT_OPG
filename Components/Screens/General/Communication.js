@@ -3,11 +3,14 @@ import { View, Text, FlatList, StyleSheet, TextInput, Button, KeyboardAvoidingVi
 import PocketBase from 'pocketbase';
 import LoadingScreen from '../LoadingScreen';
 
+
+//Denne skærm er til at brugeren kan kommunikere med en anden bruger
 export default function Communication({ route }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const { renter, owner } = route.params;
 
+  //sender beskeden til pocketbase databasen, og henter derefter alle beskederne igen
     async function sendMessage() {
         const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
         const data = {
@@ -20,6 +23,7 @@ export default function Communication({ route }) {
         getMessages();
     }
 
+    //Henter alle beskederne fra pocketbase databasen, mellem de to brugere
     async function getMessages() {
         const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
         const filter = `(messageReceiver = '${renter}' || messageSender = '${renter}') && (messageReceiver = '${owner}' || messageSender = '${owner}')`;

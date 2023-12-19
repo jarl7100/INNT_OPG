@@ -6,6 +6,7 @@ import PocketBase from 'pocketbase';
 import LoadingScreen from '../LoadingScreen';
 import { Button } from 'react-native-paper';
 
+//Denne skærm er til at brugeren kan se et opslag han har lavet
 const BoatPostRenter = ({route}) => {
     const pb = new PocketBase('https://pocketbaselucashunt.fly.dev');
     const navigation = useNavigation();
@@ -14,10 +15,14 @@ const BoatPostRenter = ({route}) => {
     const { boatID } = route.params;
     const [averageStars, setAverageStars] = useState(0);
 
+
+    //Henter opslaget fra pocketbase databasen
     async function getBoatInformation() {
         const record = await pb.collection('boatPosts').getOne(boatID);
         setBoat(record);
        
+
+        //Henter alle anmeldelserne for den bruger der ejer båden og udregner gennemsnittet af stjernerne
         const filter = `ownerID = '${record.boatOwner}'`;
         const stars = await pb
           .collection("review")

@@ -11,6 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import Style from "../../GlobalStyleSheet/Style.js";
 
+
+//Denne skærm er til at boat renter kan se sin profil
 export default function Profile({ route }) {
   const [reloadFlag, setReloadFlag] = useState(route.params?.reloadFlag);
 
@@ -29,6 +31,8 @@ export default function Profile({ route }) {
     setReloadFlag(false);
   }, [reloadFlag]);
 
+
+  //logger brugeren ud ved at slette token og id fra asyncstorage og navigere tilbage til welcome siden
   async function loguserout() {
     await logout();
     navigation.reset({

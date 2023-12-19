@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+//Gemmer token, userID og boatOwner i asyncstorage
 export const storeToken = async ({userToken, userID, boatOwner}) => {
   console.log(userToken, userID, boatOwner)
   try {
@@ -11,7 +12,7 @@ export const storeToken = async ({userToken, userID, boatOwner}) => {
     // Handle errors
   }
 };
-
+//Opdaterer boatowner i asyncstorage
 export const updateBoatOwner = async (boatOwner) => {
   
   try {
@@ -21,6 +22,7 @@ export const updateBoatOwner = async (boatOwner) => {
   }
 };
 
+//Henter token fra asyncstorage
 export const getToken = async () => {
   try {
     const userToken = await AsyncStorage.getItem('userToken');
@@ -40,6 +42,7 @@ export const getToken = async () => {
   }
 };
 
+//Henter userID fra asyncstorage
 export const getID = async () => {
   try {
     const userID = await AsyncStorage.getItem('userID');
@@ -59,6 +62,7 @@ export const getID = async () => {
   }
 };
 
+//Henter boatOwner fra asyncstorage
 export const getBoatOwner = async () => {
   try {
     const boatOwner = await AsyncStorage.getItem('boatOwner');
@@ -79,6 +83,7 @@ export const getBoatOwner = async () => {
   }
 };
 
+//Sletter token fra asyncstorage
 export const logout = async () => {
   
   try {

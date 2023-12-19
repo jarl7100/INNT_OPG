@@ -5,6 +5,8 @@ import PocketBase from "pocketbase";
 
 import { useNavigation } from "@react-navigation/native";
 
+
+//Denne skærm er til at brugeren kan se alle de anmeldelser han har fået
 export default function YourReviews({route}) {
   const { ownerID } = route.params;
   const navigation = useNavigation();
@@ -12,6 +14,8 @@ export default function YourReviews({route}) {
   const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
   const [reviews, setReviews] = useState([]);
 
+
+  //Henter alle anmeldelserne for den bruger der ejer båden
   async function fetchReviews() {
 
     try {

@@ -7,6 +7,8 @@ import PocketBase from "pocketbase";
 import LoadingScreen from "../LoadingScreen.js";
 import { Button } from "react-native-paper";
 
+
+//Denne skærm er til at brugeren kan se sine reservationer
 const YourReservation = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); // Create a new state variable called 'loading' and initialize it to true
@@ -14,6 +16,8 @@ const YourReservation = () => {
   const [futureReservations, setFutureReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
   const [refreshing, setRefreshing] = useState(true);
 
+
+  //Henter brugerens id fra asyncstorage, og bruger det til at hente alle reservationer fra pocketbase databasen
   async function getReservations() {
     const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
     const id = await getID();
@@ -24,6 +28,7 @@ const YourReservation = () => {
       filter: filter,
     });
  
+    //Sortere reservationerne så de bliver delt op i fremtidige og gamle reservationer
     if (data.items.length > 0) {
       const today = new Date();
       const futureReservations = data.items.filter(
@@ -48,10 +53,12 @@ const YourReservation = () => {
     getReservations();
   }, []);
 
+  //Navigere til kommunikationssiden med den bruger der har lavet reservationen
   function navigateToCommunication(renterID, ownerID) {
     navigation.navigate("Communication", { renter: renterID, owner: ownerID });
   }
 
+  //Bruger til at vise alle de fremtidige reservationer
   const renderFutureReservations = ({ item }) => {
  
     const endDate = new Date(item.endDate);
@@ -125,6 +132,7 @@ const YourReservation = () => {
     );
   };
   
+  //Bruges til at vise alle de gamle reservationer
   const renderOldReservations = ({ item }) => {
     
     const endDate = new Date(item.endDate);
