@@ -51,7 +51,7 @@ const ChatPage = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffff" }}>
+    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: "#ffff" }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <FlatList
         data={messages}
         keyExtractor={(item, index) => index.toString()}
@@ -70,8 +70,9 @@ const ChatPage = () => {
           </View>
         )}
       />
-            {loadingState ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-      <KeyboardAvoidingView style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <KeyboardAvoidingView style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}
+        behavior={'padding'}
+        >
         <TextInput
           style={{ flex: 1, borderWidth: 1, borderRadius: 8, padding: 8, marginLeft: 8}}
           value={inputMessage}
@@ -81,7 +82,7 @@ const ChatPage = () => {
         <Button title="Send" onPress={sendMessage}
         />
       </KeyboardAvoidingView>
-    </View>
+      </KeyboardAvoidingView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView, RefreshControl } from "react-native";
 import { Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { getID } from "../../utils/AuthService.js";
@@ -12,6 +12,8 @@ const Resevations = () => {
   const [loading, setLoading] = useState(true); // Create a new state variable called 'loading' and initialize it to true
   const [oldReservations, setOldReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
   const [futureReservations, setFutureReservations] = useState([]); // Create a new state variable called 'reservations' and initialize it to an empty array [
+    const [refreshing, setRefreshing] = useState(true);
+
 
   async function getReservations() {
     const pb = new PocketBase("https://pocketbaselucashunt.fly.dev");
@@ -35,8 +37,10 @@ const Resevations = () => {
       setFutureReservations(futureReservations);
       setOldReservations(oldReservations);
 
+      setRefreshing(false);
       setLoading(false);
     } else {
+      setRefreshing(false);
       setLoading(false);
     }
   }
@@ -214,7 +218,11 @@ const Resevations = () => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: "white", flex: 1, padding: 20 }}>
+    <ScrollView style={{ backgroundColor: "white", flex: 1, padding: 20 }}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={getReservations} />
+    }
+    >
       {loading ? (
         <LoadingScreen />
       ) : (

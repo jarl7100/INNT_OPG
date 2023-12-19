@@ -221,7 +221,6 @@ profilBoatOwnerCard: {
 },
 profileOwnerContainer: {
   flex: 1, 
-  justifyContent: 'center', 
   backgroundColor: '#fff'
 },
 profileOwnerCardViewer: {
