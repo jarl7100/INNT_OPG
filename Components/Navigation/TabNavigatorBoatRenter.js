@@ -2,8 +2,6 @@ import 'react-native-gesture-handler';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 // Henter alle siderne der skal bruges i bunden af appen
 import BoatsScreen from "../Screens/BoatRenter/BoatsScreen.js";
@@ -11,11 +9,11 @@ import Profile from "../Screens/BoatRenter/Profile.js";
 import HomeScreen from '../Screens/BoatRenter/HomeScreen.js';
 import Map from '../Screens/BoatRenter/Map.js';
 import Resevations from '../Screens/BoatRenter/Resevations.js';
+import ChatPage from '../Screens/General/ChatbotPage.js';
 
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
-    const navigation = useNavigation();
     return (
       <Tab.Navigator  screenOptions={({ route }) => ({
         tabBarActiveTintColor: "blue",
@@ -26,7 +24,7 @@ function TabNavigator() {
           },
           null
         ],
-        // Her laver vi ikonerne til de forskellige sider i appen for boat renter
+        // Her laver vi ikonerne til de forskellige sider i appen
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'Boats') {
             return (<Ionicons
@@ -73,42 +71,26 @@ function TabNavigator() {
               />
             );
           }
+          if (route.name === 'ChatBot') {
+            return (<Ionicons
+              name="help-circle-outline"
+              size={size}
+              color={color}
+            />
+            );
+          }
         },
       })}
 
-      // Her laver vi de forskellige sider i appen for boat renter
+      // Her laver vi de forskellige sider i appen
       >
 
-        <Tab.Screen name="Home"  component={HomeScreen}
-          options={{
-            headerRight: () => (
-              <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
-            ),
-          }}/>
-        <Tab.Screen name="Boats" component={BoatsScreen}
-          options={{
-            headerRight: () => (
-              <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
-            ),
-          }}/>
-        <Tab.Screen name="Resevations" component={Resevations} 
-          options={{
-            headerRight: () => (
-              <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
-            ),
-          }}/>
-        <Tab.Screen name="Map" component={Map} 
-          options={{
-            headerRight: () => (
-              <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
-            ),
-          }}/>
-        <Tab.Screen name="Profile" component={Profile} 
-          options={{
-            headerRight: () => (
-              <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
-            ),
-          }}/>
+        <Tab.Screen name="Home"  component={HomeScreen}/>
+        <Tab.Screen name="Boats" component={BoatsScreen}/>
+        <Tab.Screen name="Resevations" component={Resevations} />
+        <Tab.Screen name="Map" component={Map} />
+        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="ChatBot" component={ChatPage} />
       </Tab.Navigator>
     )
   }
