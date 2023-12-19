@@ -24,7 +24,7 @@ function TabNavigator() {
           },
           null
         ],
-        // Her laver vi ikonerne til de forskellige sider i appen
+        // Her laver vi ikonerne til de forskellige sider i appen for boat renter
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'Boats') {
             return (<Ionicons
@@ -82,7 +82,7 @@ function TabNavigator() {
         },
       })}
 
-      // Her laver vi de forskellige sider i appen
+      // Her laver vi de forskellige sider i appen for boat renter
       >
 
         <Tab.Screen name="Home"  component={HomeScreen}/>

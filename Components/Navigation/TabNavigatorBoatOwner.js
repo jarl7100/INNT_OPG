@@ -25,7 +25,7 @@ export default function TabNavigatorBoatOwner() {
           },
           null
         ],
-        // Her laver vi ikonerne til de forskellige sider i appen
+        // Her laver vi ikonerne til de forskellige sider i appen boat owner
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'ChatBot') {
             return (<Ionicons
@@ -64,7 +64,7 @@ export default function TabNavigatorBoatOwner() {
           }
         },
       })}
-      // Her laver vi de forskellige sider i appen
+      // Her laver vi de forskellige sider i appen boat owner
       >
         <Tab.Screen name="Profile"  component={ProfilBoatOwner}/>
         <Tab.Screen name="Add Boat" component={AddBoat} />
