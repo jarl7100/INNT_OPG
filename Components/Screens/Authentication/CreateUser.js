@@ -60,7 +60,6 @@ export default function CreateUser({}) {
             index: 0,
             routes: [{name: 'startScreenRenter'}],
           })
-          navigation.navigate('startScreenRenter');
         } else {
           navigation.reset({
             index: 0,

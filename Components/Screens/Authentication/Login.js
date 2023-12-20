@@ -37,7 +37,10 @@ export default function Login({}) {
 
         setLoadingState(false);
         if (pb.authStore.model.boatOwner === false) {
-          navigation.navigate('startScreenRenter');
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'startScreenRenter'}],
+          })
         } else {
           navigation.reset({
             index: 0,
