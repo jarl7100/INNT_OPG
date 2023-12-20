@@ -60,7 +60,7 @@ const UpdateBoatPost = ({ route }) => {
     async function updateBoatPost() {
         const record = await pb.collection('boatPosts').update(boatID, boat);
 
-        navigation.navigate("Profile");
+        navigation.navigate("Profile", { reloadFlag: Date.now() });
     }
 
 

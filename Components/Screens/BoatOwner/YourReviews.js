@@ -75,6 +75,8 @@ export default function YourReviews({route}) {
     <View style={{ backgroundColor: "white", flex: 1 }}>
       {loading ? (
         <LoadingScreen />
+      ) : reviews.length === 0 ? (
+        <Text style={{ fontSize: 30, textAlign: "center", marginTop: "50%" }}>Ingen anmeldelser endnu</Text>
       ) : (
         <FlatList
           data={reviews}
@@ -85,15 +87,3 @@ export default function YourReviews({route}) {
     </View>
   );
 }
-
-const style = StyleSheet.create({
-  text: {
-    fontSize: 20,
-
-    fontWeight: "300",
-  },
-  header: {
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-});

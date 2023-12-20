@@ -59,7 +59,7 @@ const AddBoat = ({ navigation }) => {
 
     try {
       await pb.collection("boatPosts").create(boat);
-      navigation.navigate("Profile");
+      navigation.navigate("Profile", { reloadFlag: Date.now() });
     } catch (error) {
       console.error("Error:", error);
     }

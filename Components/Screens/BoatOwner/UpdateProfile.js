@@ -37,7 +37,7 @@ export default function UpdateProfile() {
   //Opdatere brugerens profil i pocketbase databasen når brugeren klikker på opdater profil knappen
   function updateProfile() {
     pb.collection("users").update(profile.id, profile);
-    navigation.navigate("Profile");
+    navigation.navigate("Profile", { reloadFlag: Date.now() });
   }
 
 

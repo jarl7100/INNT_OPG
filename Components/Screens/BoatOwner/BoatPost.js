@@ -62,7 +62,8 @@ function BoatPostCard({ boat, averageStars }) {
   const pb = new Pocketbase("https://pocketbaselucashunt.fly.dev");
   const deleteBoatPost = async () => {
     await pb.collection("boatPosts").delete(boat.id);
-    navigation.navigate("Profile");
+    navigation.navigate("Profile", { reloadFlag: Date.now() });
+    navigation.navigate("Profile", { reloadFlag: Date.now() });
   };
   const options = { month: "short", day: "numeric" };
   const startDate = new Date(boat.dateStart).toLocaleDateString(

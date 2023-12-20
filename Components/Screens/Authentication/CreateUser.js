@@ -56,15 +56,9 @@ export default function CreateUser({}) {
         console.log(pb.authStore.model.boatOwner)
         setLoadingState(false);
         if (pb.authStore.model.boatOwner === false) {
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'startScreenRenter'}],
-          })
+          navigation.navigate('startScreen', { reloadFlag: Date.now() });
         } else {
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'startScreenOwner'}],
-          })
+          navigation.navigate('startScreenOwner', { reloadFlag: Date.now() });
         }
       }
     } catch (error) {

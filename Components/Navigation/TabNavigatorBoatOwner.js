@@ -37,15 +37,6 @@ export default function TabNavigatorBoatOwner() {
           />
           );
         }
-        else if (route.name === 'Add Boat') {
-          return (
-            <Ionicons
-              name="add-outline"
-              size={size}
-              color={color}
-            />
-          );
-        }
         else if (route.name === 'Profile') {
           return (
             <Ionicons
@@ -74,12 +65,6 @@ export default function TabNavigatorBoatOwner() {
               <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
             ),
           }}/>
-      <Tab.Screen name="Add Boat" component={AddBoat}
-     options={{
-      headerRight: () => (
-        <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
-      ),
-    }} />
       <Tab.Screen name="Your Reservations" component={YourReservation}
        options={{
         headerRight: () => (

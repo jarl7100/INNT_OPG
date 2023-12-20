@@ -20,6 +20,7 @@ import Payment from '../Screens/BoatRenter/Payment.js';
 import CreateReview from '../Screens/BoatRenter/CreateReview.js';
 import ChatPage from '../Screens/General/ChatbotPage.js';
 import MapBoatScreen from '../Screens/BoatRenter/MapBoatScreen.js';
+import AddBoat from '../Screens/BoatOwner/AddBoat.js';
 
 const Stack = createStackNavigator();
 
@@ -93,6 +94,10 @@ function StackNavigator() {
       <Stack.Screen
         name="Map Boat Screen"
         component={MapBoatScreen}
+      />
+      <Stack.Screen
+        name="Add Boat"
+        component={AddBoat}
       />
     </Stack.Navigator>
   );
