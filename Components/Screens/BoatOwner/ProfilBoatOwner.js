@@ -47,7 +47,8 @@ const ProfilBoatOwner = ({route}) => {
          }
  
        }
- 
+
+
        //Navigere til opslaget for båden hvis brugeren har en båd ellers navigere den til opret båd siden
        function navigateToBoatPost(boatID) {
  
@@ -66,6 +67,9 @@ const ProfilBoatOwner = ({route}) => {
             await getBoatInformation();
             if (counter < 2) {
                 setCounter(prevCounter => prevCounter + 1);  // Increment the counter
+            }
+            if (route.params?.postDeleted) {
+                setBoat("")
             }
         };
     
@@ -113,19 +117,24 @@ const ProfilBoatOwner = ({route}) => {
                     <Card style={Style.profilBoatOwnerInsideCard} onPress={() => navigateToBoatPost(boat.id)}>
                         <Card.Title title={boat.length !== 0 ? "Din Båd" : "Opret båd"} titleStyle={{ textAlign: 'center', fontSize: 20, color: "#4097ed", fontWeight: 'bold', marginBottom: -5 }} />
                         <Card.Content>
-                            <Divider />
-                            <Card.Cover style={Style.cardImagePost} source={{ uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp' }} />
-                            <Text style={Style.textCardOwnerTop1}>
-                            {boat.boatTitle || 'Ikke angivet'}
-                            </Text>
-                            <Text style={Style.textCardOwner2}>
-
-                            {<Ionicons name="location-outline" size={22} />} {boat.boatHarbour || 'Ikke angivet'}
-                            </Text>
-                            <Text style={Style.textCardOwner3}>
-                                                 {<Ionicons name="pricetag-outline" size={27} />} {boat.boatPrice || 'Ikke angivet'},- /uge
-                                    </Text>
-                                             </Card.Content>
+                        {boat.length !== 0 ? (
+                                    <>
+                                        <Divider />
+                                        <Card.Cover style={Style.cardImagePost} source={{ uri: 'https://scdn.malibuboats.dev/cdn.pursuitboats.com/images/HomeNews/WOUNDER-70.webp' }} />
+                                        <Text style={Style.textCardOwnerTop1}>
+                                            {boat.boatTitle || 'Ikke angivet'}
+                                        </Text>
+                                        <Text style={Style.textCardOwner2}>
+                                            {<Ionicons name="location-outline" size={22} />} {boat.boatHarbour || 'Ikke angivet'}
+                                        </Text>
+                                        <Text style={Style.textCardOwner3}>
+                                            {<Ionicons name="pricetag-outline" size={27} />} {boat.boatPrice || 'Ikke angivet'},- /uge
+                                        </Text>
+                                    </>
+                                ) : (
+                                    <Text style={{fontSize: 18, textAlign: 'center', margin: 40}}>Tryk Her for at oprette din Båd</Text>
+                                )}
+                            </Card.Content>
                                          </Card>
                                          <Button style={Style.postEditbutton} mode="contained" onPress={() => navigation.navigate('Your Reviews', {ownerID: boat.boatOwner})}>
                                              {<Text style={{color: "black"}}>Reviews</Text>}
@@ -133,7 +142,6 @@ const ProfilBoatOwner = ({route}) => {
                                      </Card.Content>
                                  </Card>
                              </View>
-                             
                          </View>
                      );
                  };

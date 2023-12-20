@@ -1,6 +1,8 @@
 import 'react-native-gesture-handler';
+import { Button } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Henter alle siderne der skal bruges i bunden af appen
@@ -14,6 +16,8 @@ import ChatPage from '../Screens/General/ChatbotPage.js';
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
+  const navigation = useNavigation();
+  
     return (
       <Tab.Navigator  screenOptions={({ route }) => ({
         tabBarActiveTintColor: "blue",
@@ -85,12 +89,35 @@ function TabNavigator() {
       // Her laver vi de forskellige sider i appen for bådlejer
       >
 
-        <Tab.Screen name="Home"  component={HomeScreen}/>
-        <Tab.Screen name="Boats" component={BoatsScreen}/>
-        <Tab.Screen name="Resevations" component={Resevations} />
-        <Tab.Screen name="Map" component={Map} />
-        <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="ChatBot" component={ChatPage} />
+        <Tab.Screen name="Home"  component={HomeScreen} options={{
+              headerRight: () => (
+                <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
+              ),
+            }}/>
+        <Tab.Screen name="Boats" component={BoatsScreen}
+        options={{
+          headerRight: () => (
+            <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
+          ),
+        }}/>
+        <Tab.Screen name="Resevations" component={Resevations} 
+        options={{
+          headerRight: () => (
+            <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
+          ),
+        }}/>
+        <Tab.Screen name="Map" component={Map} 
+        options={{
+          headerRight: () => (
+            <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
+          ),
+        }}/>
+        <Tab.Screen name="Profile" component={Profile} 
+        options={{
+          headerRight: () => (
+            <Button title="Help" onPress={() => navigation.navigate("Chatbot")} />
+          ),
+        }}/>
       </Tab.Navigator>
     )
   }

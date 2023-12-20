@@ -62,8 +62,7 @@ function BoatPostCard({ boat, averageStars }) {
   const pb = new Pocketbase("https://pocketbaselucashunt.fly.dev");
   const deleteBoatPost = async () => {
     await pb.collection("boatPosts").delete(boat.id);
-    navigation.navigate("Profile", { reloadFlag: Date.now() });
-    navigation.navigate("Profile", { reloadFlag: Date.now() });
+    navigation.navigate("Profile", { postDeleted: true });
   };
   const options = { month: "short", day: "numeric" };
   const startDate = new Date(boat.dateStart).toLocaleDateString(
@@ -281,7 +280,7 @@ function BoatPostCard({ boat, averageStars }) {
                 margin: 5
                 }}
                 mode="elevated"
-                onPress={() => navigation.navigate("Your Reviews")}
+                onPress={() => navigation.navigate("Your Reviews", {ownerID: boat.boatOwner}) }
             >
                 <Text style={{ fontSize: 14, color: "white", paddingVertical: 1 }}>
                 Anmeldelser
